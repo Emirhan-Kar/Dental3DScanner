@@ -1,0 +1,24 @@
+# Python önbellekleri
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+
+# Büyük Veriler ve Ağırlık Dosyaları
+data/3DTeethData/*
+data/2DTeethData/*
+data/TestVideo/*
+!data/3DTeethData/.gitkeep
+!data/2DTeethData/.gitkeep
+!data/TestVideo/.gitkeep
+*.obj
+*.ply
+*.stl
+*.pth
+*.pt
+
+# IDE / Editör
+.vscode/
+.idea/
