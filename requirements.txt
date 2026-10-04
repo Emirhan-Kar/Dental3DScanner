@@ -16,3 +16,6 @@ torchvision>=0.16.0
 # Görselleştirme ve Yardımcı Araçlar
 matplotlib>=3.7.0
 tqdm>=4.65.0
+
+# Test Altyapısı
+pytest>=7.4.0

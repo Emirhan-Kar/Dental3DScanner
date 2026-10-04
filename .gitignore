@@ -5,6 +5,9 @@ __pycache__/
 .venv/
 venv/
 env/
+venv_gpu/
+
+#eğitilmiş model
 
 # Büyük Veriler ve Ağırlık Dosyaları
 data/3DTeethData/*
@@ -13,6 +16,8 @@ data/TestVideo/*
 !data/3DTeethData/.gitkeep
 !data/2DTeethData/.gitkeep
 !data/TestVideo/.gitkeep
+data/four/*
+
 *.obj
 *.ply
 *.stl
@@ -22,3 +27,11 @@ data/TestVideo/*
 # IDE / Editör
 .vscode/
 .idea/
+
+# Loglar ve Geçici Dosyalar
+logs/
+*.log
+output/
+.pytest_cache/
+ScreenCamera_*.json
+ScreenCapture_*.png

@@ -1,0 +1,75 @@
+# =====================================================================
+# AI-Driven Intraoral 3D Reconstruction & Dental Segmentation Engine
+# Merkezi Konfigurasyon Dosyasi (configs/config.yaml)
+# =====================================================================
+
+# 1. Optik ve Kamera Ayarlari
+camera:
+  params_yaml: "calibration/camera_params.yaml" # Kalibre edilmis YAML dosyasi
+  fallback_matrix:                              # params_yaml bulunamazsa kullanilacak pinhole matrisi
+    - [800.0, 0.0, 320.0]
+    - [0.0, 800.0, 240.0]
+    - [0.0, 0.0, 1.0]
+  dist_coeffs: [0.0, 0.0, 0.0, 0.0, 0.0]
+  width: 1920
+  height: 1080
+  # Lazer duzlemi katsayilari [A, B, C, D] (Ax + By + Cz + D = 0)
+  laser_plane: [0.0, -1.0, 0.5, -150.0]
+
+# 2. Lazer Cizgisi Algilama Parametreleri
+laser_detector:
+  lower_hsv: [0, 100, 100]        # Kirmizi renk alt esigi
+  upper_hsv: [10, 255, 255]       # Kirmizi renk ust esigi
+  intensity_threshold: 50         # Alt-piksel merkez agirlikli ortalama icin minimum parlaklik
+
+# 3. 3D Nokta Bulutu Birlestirme (ICP & RANSAC)
+icp_stitcher:
+  voxel_size: 0.4                 # Voxel grid boyutu (mm)
+  ransac_distance_multiplier: 3.0 # Voxel size ile carpilan RANSAC esik degeri
+  icp_distance_multiplier: 1.5    # Voxel size ile carpilan Point-to-Plane ICP esik degeri
+  icp_max_iterations: 80          # ICP maks iterasyon sayisi
+  ransac_max_iterations: 100000   # RANSAC maks iterasyon sayisi
+
+# 4. Kamera Kalibrasyon Parametreleri
+calibration:
+  chessboard_size: [9, 6]         # Ic kose sayisi (sutun, satir)
+  square_size: 25.0               # Milimetre cinsinden bir karenin kenar uzunlugu
+  image_folder: "data/2DTeethData"
+  output_path: "calibration/camera_params.yaml"
+
+# 5. 3D Derin Ogrenme (AI Model Egitim & Cikarim)
+ai_model:
+  in_channels: 6                  # X, Y, Z + Nx, Ny, Nz (Normaller)
+  num_classes: 33                 # 32 Dis + 1 Dis Eti (FDI standardi)
+  num_points: 4096                # Model girdisi nokta sayisi
+  batch_size: 4                   # GPU bellek dostu mini-batch
+  epochs: 120                     # Toplam egitim epoch adedi
+  learning_rate: 0.001            # Adam optimizer ogrenme orani
+  lr_step_size: 10                # StepLR adim araligi
+  lr_gamma: 0.5                   # StepLR carpani
+  checkpoint_path: "ai_model/best_dental_model.pth"
+  data_root: "data/3DTeethData"   # Teeth3DS veri seti dizini
+  parts:
+    - "data_part_1"
+    - "data_part_2"
+    - "data_part_3"
+    - "data_part_4"
+    - "data_part_5"
+    - "data_part_6"
+
+# 6. 3D Yuzey Yeniden Yapilandirma ve Katı Model Uretimi (Mesh Reconstruction)
+mesh_generator:
+  method: "poisson"               # "poisson" veya "ball_pivoting"
+  poisson_depth: 9                # Poisson ayrinti derinligi (8-10 arasi ideal)
+  density_trim_percentile: 5      # Poisson dis hacim kirpma yuzdeligi
+  smooth_iterations: 3            # Laplasyen yuzey puruzsuzlestirme iterasyonu
+  default_output: "output/dental_model.stl"
+
+# 7. Loglama Yonetimi
+logging:
+  level: "INFO"                   # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  log_file: "logs/dental_scanner.log"
+  console: true
+  max_bytes: 10485760             # 10 MB
+  backup_count: 5
+

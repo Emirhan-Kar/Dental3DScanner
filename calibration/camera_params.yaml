@@ -1,0 +1,13 @@
+# ==========================================
+# Dental Scanner Kamera Kalibrasyon Parametreleri
+# ==========================================
+camera_matrix:
+  - [913.6568, 0.0, 959.5]
+  - [0.0, 913.6568, 527.0]
+  - [0.0, 0.0, 1.0]
+
+dist_coeff: [0.0, 0.0, 0.0, 0.0, 0.0]
+
+image_width: 1920
+image_height: 1080
+reprojection_error: 0.1245
