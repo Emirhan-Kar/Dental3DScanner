@@ -1,0 +1,21 @@
+# Temel Matematik ve Veri İşleme
+numpy>=1.24.0
+scipy>=1.10.0
+pyyaml>=6.0
+
+# Bilgisayarlı Görü ve 2D İşleme
+opencv-python>=4.8.0
+
+# 3D Veri İşleme, Nokta Bulutu ve ICP
+open3d>=0.17.0
+
+# Derin Öğrenme ve Yapay Zeka (3D Segmentasyon)
+torch>=2.1.0
+torchvision>=0.16.0
+
+# Görselleştirme ve Yardımcı Araçlar
+matplotlib>=3.7.0
+tqdm>=4.65.0
+
+# Test Altyapısı
+pytest>=7.4.0
