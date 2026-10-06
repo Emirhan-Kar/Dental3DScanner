@@ -302,4 +302,4 @@ python utils/validator.py --data-root data/3DTeethData --parts data_part_1 data_
 
 Bu proje [MIT Lisansı](LICENSE) altında lisanslanmıştır.
 
-**Copyright (c) 2026 Emirhan Kar**
+**Copyright (c) 2026 Emirhan Kar && Furkan Genç**
