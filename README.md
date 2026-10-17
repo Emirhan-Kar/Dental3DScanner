@@ -285,16 +285,28 @@ python -m pytest tests/ --tb=short -q
 
 ## 📦 Veri Seti ve Test Verilerinin Temini
 
-Büyük boyutlu 3D tarama dosyaları (`.obj`, `.ply`) Git deposuna dahil edilmemiştir.
+Büyük boyutlu 3D diş tarama modelleri ve test verileri (`~16.25 GB`) dosya boyutu sınırları nedeniyle Git deposuna dahil edilmemiştir ve bulut depolama üzerinden paylaşılmaktadır.
 
-1. Test modellerini içeren paketi bulut depolama üzerinden temin edin:
-   * **İndirme Bağlantısı:** `[BULUT_DEPOLAMA_LINKI]`
-2. İndirilen dosyaları `data/3DTeethData/` dizinine yerleştirin.
+1. **Veri Setini İndirin:**
+   * 🔗 **Google Drive İndirme Bağlantısı:** [Dental_3DTeeth_Dataset.zip İndir (Google Drive)](https://drive.google.com/drive/folders/16Hu5X4xl0T8laWr-EeORfRhz_pGa7D0E)
+   * **Arşiv Adı:** `Dental_3DTeeth_Dataset.zip` (~16.25 GB)
 
-Veri seti bütünlüğünü doğrulamak için:
-```bash
-python utils/validator.py --data-root data/3DTeethData --parts data_part_1 data_part_2
-```
+2. **Arşivi Çıkarın:**
+   İndirdiğiniz `Dental_3DTeeth_Dataset.zip` arşivini proje kök dizinindeki `data/` klasörünün içerisine çıkartın. Çıkarma işleminden sonra dizin yapısı şu şekilde olmalıdır:
+   ```text
+   data/
+   ├── 3DTeethData/
+   │   ├── data_part_1/
+   │   └── data_part_2/
+   ├── 2DTeethData/
+   ├── TestVideo/
+   └── four/
+   ```
+
+3. **Veri Seti Bütünlüğünü Doğrulayın:**
+   ```bash
+   python utils/validator.py --data-root data/3DTeethData --parts data_part_1 data_part_2
+   ```
 
 ---
 

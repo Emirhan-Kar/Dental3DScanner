@@ -5,226 +5,239 @@ import yaml
 import numpy as np
 
 # Proje kok dizinini sys.path'e ekle
-ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-if ROOT_DIR not in sys.path:
-    sys.path.insert(0, ROOT_DIR)
+KOK_DIZIN = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if KOK_DIZIN not in sys.path:
+    sys.path.insert(0, KOK_DIZIN)
 
 from utils.logger import get_logger
 from utils.config import load_config, get_base_parser
 
-logger = get_logger(__name__)
+kayitci = get_logger(__name__)
 
 
 class CameraCalibrator:
     def __init__(
         self,
-        chessboard_size=None,
-        square_size=None,
-        output_path=None,
-        config=None
+        satranc_boyutu=None,
+        kare_boyutu=None,
+        cikis_yolu=None,
+        konfig=None,
+        **ek_parametreler
     ):
         """
         Kamera Kalibrasyon Modulu. Parametreler verilmezse config.yaml'dan yuklenir.
 
         Args:
-            chessboard_size (tuple, optional): Ic kose sayisi (sutun, satir), orn. (9, 6).
-            square_size (float, optional): Her bir karenin milimetre cinsinden kenar uzunlugu.
-            output_path (str, optional): Katsayilarin kaydedilecegi YAML dosyasinin yolu.
-            config (ConfigNode, optional): Merkezi konfigurasyon nesnesi.
+            satranc_boyutu (tuple, optional): Ic kose sayisi (sutun, satir), orn. (9, 6).
+            kare_boyutu (float, optional): Her bir karenin milimetre cinsinden kenar uzunlugu.
+            cikis_yolu (str, optional): Katsayilarin kaydedilecegi YAML dosyasinin yolu.
+            konfig (ConfigNode, optional): Merkezi konfigurasyon nesnesi.
 
         Raises:
             TypeError / ValueError: Parametre tipleri veya degerleri gecersiz ise.
         """
-        if config is None and (chessboard_size is None or square_size is None or output_path is None):
-            config = load_config()
+        satranc_boyutu = ek_parametreler.get("chessboard_size", satranc_boyutu)
+        kare_boyutu = ek_parametreler.get("square_size", kare_boyutu)
+        cikis_yolu = ek_parametreler.get("output_path", cikis_yolu)
+        konfig = ek_parametreler.get("config", konfig)
 
-        calib_cfg = config.calibration if config else None
+        if konfig is None and (satranc_boyutu is None or kare_boyutu is None or cikis_yolu is None):
+            konfig = load_config()
+
+        kalibrasyon_konfig = konfig.calibration if konfig else None
 
         # Parametre secimi (Dogrudan verilen > Config > Varsayilan)
-        if chessboard_size is None:
-            chessboard_size = tuple(calib_cfg.chessboard_size) if calib_cfg else (9, 6)
-        if square_size is None:
-            square_size = calib_cfg.square_size if calib_cfg else 25.0
-        if output_path is None:
-            output_path = calib_cfg.output_path if calib_cfg else "calibration/camera_params.yaml"
+        if satranc_boyutu is None:
+            satranc_boyutu = tuple(kalibrasyon_konfig.chessboard_size) if kalibrasyon_konfig else (9, 6)
+        if kare_boyutu is None:
+            kare_boyutu = kalibrasyon_konfig.square_size if kalibrasyon_konfig else 25.0
+        if cikis_yolu is None:
+            cikis_yolu = kalibrasyon_konfig.output_path if kalibrasyon_konfig else "calibration/camera_params.yaml"
 
-        if not isinstance(chessboard_size, (tuple, list)) or len(chessboard_size) != 2:
-            raise ValueError(f"chessboard_size 2 elemanli (sutun, satir) bir tuple olmalidir, alinan: {chessboard_size}")
+        if not isinstance(satranc_boyutu, (tuple, list)) or len(satranc_boyutu) != 2:
+            raise ValueError(f"satranc_boyutu 2 elemanli (sutun, satir) bir tuple olmalidir, alinan: {satranc_boyutu}")
 
-        cols, rows = chessboard_size
-        if not (isinstance(cols, int) and isinstance(rows, int)) or cols <= 2 or rows <= 2:
-            raise ValueError(f"chessboard_size boyutlari en az 3x3 olmalidir, alinan: {chessboard_size}")
+        sutun, satir = satranc_boyutu
+        if not (isinstance(sutun, int) and isinstance(satir, int)) or sutun <= 2 or satir <= 2:
+            raise ValueError(f"satranc_boyutu boyutlari en az 3x3 olmalidir, alinan: {satranc_boyutu}")
 
-        if not isinstance(square_size, (int, float)) or square_size <= 0:
-            raise ValueError(f"square_size pozitif bir sayi olmalidir, alinan: {square_size}")
+        if not isinstance(kare_boyutu, (int, float)) or kare_boyutu <= 0:
+            raise ValueError(f"kare_boyutu pozitif bir sayi olmalidir, alinan: {kare_boyutu}")
 
-        if not isinstance(output_path, str) or not output_path.strip():
-            raise ValueError("output_path gecerli bir dosya yolu olmalidir.")
+        if not isinstance(cikis_yolu, str) or not cikis_yolu.strip():
+            raise ValueError("cikis_yolu gecerli bir dosya yolu olmalidir.")
 
-        self.chessboard_size = (cols, rows)
-        self.square_size = float(square_size)
-        self.output_path = output_path.strip()
+        self.satranc_boyutu = (sutun, satir)
+        self.kare_boyutu = float(kare_boyutu)
+        self.cikis_yolu = cikis_yolu.strip()
+
+        # Geriye donuk uyumluluk ozellikleri
+        self.chessboard_size = self.satranc_boyutu
+        self.square_size = self.kare_boyutu
+        self.output_path = self.cikis_yolu
 
         # Gercek dunya 3D koordinat sablonu (Z=0 duzlemi)
-        self.objp = np.zeros(
-            (chessboard_size[0] * chessboard_size[1], 3), np.float32
-        )
-        self.objp[:, :2] = (
-            np.mgrid[0:chessboard_size[0], 0:chessboard_size[1]].T.reshape(-1, 2) * self.square_size
+        self.nesne_sablonu = np.zeros((sutun * satir, 3), np.float32)
+        self.nesne_sablonu[:, :2] = (
+            np.mgrid[0:sutun, 0:satir].T.reshape(-1, 2) * self.kare_boyutu
         )
 
-        self.obj_points = []  # 3D noktalar
-        self.img_points = []  # 2D noktalar
+        self.nesne_noktalari = []   # 3D noktalar
+        self.goruntu_noktalari = []  # 2D noktalar
 
-    def process_images(self, image_folder="data/2DTeethData"):
+    def process_images(self, goruntu_klasoru="data/2DTeethData"):
         """
         Klasordeki kalibrasyon fotograflarini tarar ve satranc tahtasi koselerini bulur.
 
         Args:
-            image_folder (str): Kalibrasyon gorsellerinin bulundugu klasor yolu.
+            goruntu_klasoru (str): Kalibrasyon gorsellerinin bulundugu klasor yolu.
 
         Returns:
             bool: Kalibrasyon basarili ve kaydedildiyse True, aksi halde False.
 
         Raises:
-            FileNotFoundError: image_folder mevcut degilse.
+            FileNotFoundError: goruntu_klasoru mevcut degilse.
             ValueError: Klasorde uygun uzantida gorsel yoksa.
         """
-        if not isinstance(image_folder, str):
-            raise TypeError(f"image_folder string olmalidir, alinan: {type(image_folder).__name__}")
+        if not isinstance(goruntu_klasoru, str):
+            raise TypeError(f"goruntu_klasoru string olmalidir, alinan: {type(goruntu_klasoru).__name__}")
 
-        if not os.path.exists(image_folder):
-            raise FileNotFoundError(f"Klasor bulunamadi: {os.path.abspath(image_folder)}")
+        if not os.path.exists(goruntu_klasoru):
+            raise FileNotFoundError(f"Klasor bulunamadi: {os.path.abspath(goruntu_klasoru)}")
 
-        valid_extensions = ('.png', '.jpg', '.jpeg', '.bmp', '.tiff')
-        images = [
-            os.path.join(image_folder, f)
-            for f in os.listdir(image_folder)
-            if f.lower().endswith(valid_extensions)
+        gecerli_uzantilar = ('.png', '.jpg', '.jpeg', '.bmp', '.tiff')
+        gorseller = [
+            os.path.join(goruntu_klasoru, dosya_adi)
+            for dosya_adi in os.listdir(goruntu_klasoru)
+            if dosya_adi.lower().endswith(gecerli_uzantilar)
         ]
 
-        if not images:
-            raise ValueError(f"'{image_folder}' klasorunde gecerli resim dosyasi bulunamadi ({valid_extensions}).")
+        if not gorseller:
+            raise ValueError(f"'{goruntu_klasoru}' klasorunde gecerli resim dosyasi bulunamadi ({gecerli_uzantilar}).")
 
-        criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
-        img_shape = None
-        successful_frames = 0
+        durdurma_kriteri = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
+        goruntu_boyutu = None
+        basarili_kare_sayisi = 0
 
-        self.obj_points.clear()
-        self.img_points.clear()
+        self.nesne_noktalari.clear()
+        self.goruntu_noktalari.clear()
 
-        for fname in images:
+        for dosya_yolu in gorseller:
             try:
-                img = cv2.imread(fname)
-                if img is None:
-                    logger.warning(f"Gorsel acilamadi veya bozuk, atlandi: {fname}")
+                goruntu = cv2.imread(dosya_yolu)
+                if goruntu is None:
+                    kayitci.warning(f"Gorsel acilamadi veya bozuk, atlandi: {dosya_yolu}")
                     continue
 
-                gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-                current_shape = gray.shape[::-1]  # (width, height)
+                gri = cv2.cvtColor(goruntu, cv2.COLOR_BGR2GRAY)
+                guncel_boyut = gri.shape[::-1]  # (genislik, yukseklik)
 
-                if img_shape is None:
-                    img_shape = current_shape
-                elif img_shape != current_shape:
-                    logger.warning(f"Gorsel boyutlari farkli ({current_shape} != {img_shape}), atlandi: {fname}")
+                if goruntu_boyutu is None:
+                    goruntu_boyutu = guncel_boyut
+                elif goruntu_boyutu != guncel_boyut:
+                    kayitci.warning(f"Gorsel boyutlari farkli ({guncel_boyut} != {goruntu_boyutu}), atlandi: {dosya_yolu}")
                     continue
 
-                ret, corners = cv2.findChessboardCorners(gray, self.chessboard_size, None)
+                bulundu, koseler = cv2.findChessboardCorners(gri, self.satranc_boyutu, None)
 
-                if ret and corners is not None:
-                    corners2 = cv2.cornerSubPix(
-                        gray, corners, (11, 11), (-1, -1), criteria
+                if bulundu and koseler is not None:
+                    hassas_koseler = cv2.cornerSubPix(
+                        gri, koseler, (11, 11), (-1, -1), durdurma_kriteri
                     )
-                    self.obj_points.append(self.objp)
-                    self.img_points.append(corners2)
-                    successful_frames += 1
-                    logger.info(f"Koseler bulundu ve islendi: {os.path.basename(fname)}")
+                    self.nesne_noktalari.append(self.nesne_sablonu)
+                    self.goruntu_noktalari.append(hassas_koseler)
+                    basarili_kare_sayisi += 1
+                    kayitci.info(f"Koseler bulundu ve islendi: {os.path.basename(dosya_yolu)}")
                 else:
-                    logger.debug(f"Koseler bulunamadi: {os.path.basename(fname)}")
+                    kayitci.debug(f"Koseler bulunamadi: {os.path.basename(dosya_yolu)}")
 
-            except Exception as e:
-                logger.error(f"Gorsel islenirken beklenmeyen hata ({fname}): {e}")
+            except Exception as hata:
+                kayitci.error(f"Gorsel islenirken beklenmeyen hata ({dosya_yolu}): {hata}")
                 continue
 
-        if successful_frames == 0 or len(self.obj_points) == 0:
-            logger.error("Hicbir gorselde satranc tahtasi koseleri tespit edilemedi!")
+        if basarili_kare_sayisi == 0 or len(self.nesne_noktalari) == 0:
+            kayitci.error("Hicbir gorselde satranc tahtasi koseleri tespit edilemedi!")
             return False
 
-        if successful_frames < 3:
-            logger.warning(f"Yalnizca {successful_frames} gorsel islendi. Guvenilir kalibrasyon icin en az 10-15 farkli aci onerilir.")
+        if basarili_kare_sayisi < 3:
+            kayitci.warning(
+                f"Yalnizca {basarili_kare_sayisi} gorsel islendi. "
+                f"Guvenilir kalibrasyon icin en az 10-15 farkli aci onerilir."
+            )
 
-        return self.calibrate_and_save(img_shape)
+        return self.calibrate_and_save(goruntu_boyutu)
 
-    def calibrate_and_save(self, img_shape):
+    def calibrate_and_save(self, goruntu_boyutu):
         """
         Kamera kalibrasyonu yapar ve parametreleri YAML dosyasina kaydeder.
 
         Args:
-            img_shape (tuple): Gorsel genislik ve yukseklik (width, height).
+            goruntu_boyutu (tuple): Gorsel boyutu (genislik, yukseklik).
 
         Returns:
             bool: Basariliysa True.
         """
-        if not self.obj_points or not self.img_points:
+        if not self.nesne_noktalari or not self.goruntu_noktalari:
             raise ValueError("Kalibrasyon icin toplanmis nokta verisi yok.")
 
         try:
-            ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(
-                self.obj_points, self.img_points, img_shape, None, None
+            rms_hata, kamera_matrisi, bozulma_katsayilari, donme_vektorleri, oteleme_vektorleri = cv2.calibrateCamera(
+                self.nesne_noktalari, self.goruntu_noktalari, goruntu_boyutu, None, None
             )
-        except cv2.error as e:
-            logger.error(f"OpenCV Kamera Kalibrasyonu basarisiz oldu: {e}")
+        except cv2.error as hata:
+            kayitci.error(f"OpenCV Kamera Kalibrasyonu basarisiz oldu: {hata}")
             return False
 
-        data = {
-            "camera_matrix": mtx.tolist(),
-            "dist_coeff": dist.tolist(),
-            "reprojection_error": float(ret),
-            "image_width": int(img_shape[0]),
-            "image_height": int(img_shape[1])
+        # NOT: YAML anahtarlari diger moduller tarafindan okundugu icin Ingilizce birakildi.
+        cikti_verisi = {
+            "camera_matrix": kamera_matrisi.tolist(),
+            "dist_coeff": bozulma_katsayilari.tolist(),
+            "reprojection_error": float(rms_hata),
+            "image_width": int(goruntu_boyutu[0]),
+            "image_height": int(goruntu_boyutu[1])
         }
 
         try:
-            output_dir = os.path.dirname(self.output_path)
-            if output_dir:
-                os.makedirs(output_dir, exist_ok=True)
+            cikis_dizini = os.path.dirname(self.cikis_yolu)
+            if cikis_dizini:
+                os.makedirs(cikis_dizini, exist_ok=True)
 
-            with open(self.output_path, 'w', encoding="utf-8") as f:
-                yaml.dump(data, f, default_flow_style=False)
+            with open(self.cikis_yolu, 'w', encoding="utf-8") as dosya:
+                yaml.dump(cikti_verisi, dosya, default_flow_style=False)
 
-            logger.info(f"Kalibrasyon Basarili! Geri Projeksiyon Hatasi (RMS): {ret:.4f} piksel")
-            logger.info(f"Parametreler kaydedildi: {self.output_path}")
+            kayitci.info(f"Kalibrasyon Basarili! Geri Projeksiyon Hatasi (RMS): {rms_hata:.4f} piksel")
+            kayitci.info(f"Parametreler kaydedildi: {self.cikis_yolu}")
             return True
 
-        except Exception as e:
-            logger.error(f"Parametreler YAML dosyasina kaydedilemedi: {e}")
+        except Exception as hata:
+            kayitci.error(f"Parametreler YAML dosyasina kaydedilemedi: {hata}")
             return False
 
 
 if __name__ == "__main__":
-    parser = get_base_parser(description="Optik ve Kamera Kalibrasyon Araci")
-    parser.add_argument("--folder", type=str, default=None, help="Kalibrasyon fotograflari klasoru")
-    parser.add_argument("--cols", type=int, default=None, help="Satranc tahtasi sutun kose sayisi")
-    parser.add_argument("--rows", type=int, default=None, help="Satranc tahtasi satir kose sayisi")
-    parser.add_argument("--square-size", type=float, default=None, help="Kare kenar uzunlugu (mm)")
-    parser.add_argument("--output", type=str, default=None, help="Kalibrasyon parametreleri cikis dosyasi (.yaml)")
+    ayristirici = get_base_parser(description="Optik ve Kamera Kalibrasyon Araci")
+    ayristirici.add_argument("--folder", type=str, default=None, help="Kalibrasyon fotograflari klasoru")
+    ayristirici.add_argument("--cols", type=int, default=None, help="Satranc tahtasi sutun kose sayisi")
+    ayristirici.add_argument("--rows", type=int, default=None, help="Satranc tahtasi satir kose sayisi")
+    ayristirici.add_argument("--square-size", type=float, default=None, help="Kare kenar uzunlugu (mm)")
+    ayristirici.add_argument("--output", type=str, default=None, help="Kalibrasyon parametreleri cikis dosyasi (.yaml)")
 
-    args = parser.parse_args()
-    cfg = load_config(args.config)
+    argumanlar = ayristirici.parse_args()
+    yuklu_konfig = load_config(argumanlar.config)
 
-    board_size = None
-    if args.cols is not None and args.rows is not None:
-        board_size = (args.cols, args.rows)
+    tahta_boyutu = None
+    if argumanlar.cols is not None and argumanlar.rows is not None:
+        tahta_boyutu = (argumanlar.cols, argumanlar.rows)
 
-    calibrator = CameraCalibrator(
-        chessboard_size=board_size,
-        square_size=args.square_size,
-        output_path=args.output,
-        config=cfg
+    kalibrator = CameraCalibrator(
+        satranc_boyutu=tahta_boyutu,
+        kare_boyutu=argumanlar.square_size,
+        cikis_yolu=argumanlar.output,
+        konfig=yuklu_konfig
     )
 
-    folder = args.folder if args.folder else cfg.calibration.image_folder
-    if os.path.exists(folder):
-        calibrator.process_images(folder)
+    klasor = argumanlar.folder if argumanlar.folder else yuklu_konfig.calibration.image_folder
+    if os.path.exists(klasor):
+        kalibrator.process_images(klasor)
     else:
-        logger.warning(f"Kalibrasyon klasoru bulunamadi: {folder}")
+        kayitci.warning(f"Kalibrasyon klasoru bulunamadi: {klasor}")

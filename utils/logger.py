@@ -4,9 +4,16 @@ import logging
 from logging.handlers import RotatingFileHandler
 
 DEFAULT_LOG_DIR = "logs"
-DEFAULT_LOG_FILE = os.path.join(DEFAULT_LOG_DIR, "dental_scanner.log")
+VARSAYILAN_LOG_DIZINI = DEFAULT_LOG_DIR
+
+DEFAULT_LOG_FILE = os.path.join(VARSAYILAN_LOG_DIZINI, "dental_scanner.log")
+VARSAYILAN_LOG_DOSYASI = DEFAULT_LOG_FILE
+
 DEFAULT_LOG_FORMAT = "[%(asctime)s] [%(levelname)s] [%(name)s:%(lineno)d] %(message)s"
+VARSAYILAN_LOG_FORMATI = DEFAULT_LOG_FORMAT
+
 DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
+TARIH_FORMATI = DATE_FORMAT
 
 
 class SafeStreamHandler(logging.StreamHandler):
@@ -14,24 +21,24 @@ class SafeStreamHandler(logging.StreamHandler):
     Windows cp1254 veya sinirli karakter kumesine sahip terminallerde
     UnicodeEncodeError olusmasini engelleyen guvenli StreamHandler.
     """
-    def emit(self, record):
+    def emit(self, kayit):
         try:
-            super().emit(record)
+            super().emit(kayit)
         except UnicodeEncodeError:
             try:
-                msg = self.format(record)
-                # Desteklenmeyen karakterleri guvenle degistir
-                safe_msg = msg.encode(self.stream.encoding or "ascii", errors="replace").decode(self.stream.encoding or "ascii")
-                self.stream.write(safe_msg + self.terminator)
+                metin = self.format(kayit)
+                kodlama = self.stream.encoding or "ascii"
+                guvenli_metin = metin.encode(kodlama, errors="replace").decode(kodlama)
+                self.stream.write(guvenli_metin + self.terminator)
                 self.flush()
             except Exception:
-                self.handleError(record)
+                self.handleError(kayit)
 
 
-def get_log_level_from_env(default_level=logging.INFO):
+def get_log_level_from_env(varsayilan_seviye=logging.INFO):
     """Cevresel degiskenden (DENTAL_LOG_LEVEL) log seviyesini okur."""
-    env_level = os.getenv("DENTAL_LOG_LEVEL", "").upper().strip()
-    levels = {
+    ortam_seviyesi = os.getenv("DENTAL_LOG_LEVEL", "").upper().strip()
+    seviyeler = {
         "DEBUG": logging.DEBUG,
         "INFO": logging.INFO,
         "WARNING": logging.WARNING,
@@ -39,98 +46,104 @@ def get_log_level_from_env(default_level=logging.INFO):
         "ERROR": logging.ERROR,
         "CRITICAL": logging.CRITICAL
     }
-    return levels.get(env_level, default_level)
+    return seviyeler.get(ortam_seviyesi, varsayilan_seviye)
 
 
 def setup_logger(
-    name="DentalScanner",
-    log_file=DEFAULT_LOG_FILE,
-    level=None,
-    console=True,
-    rotate=True,
-    max_bytes=10 * 1024 * 1024,  # 10 MB
-    backup_count=5
+    isim="DentalScanner",
+    log_dosyasi=VARSAYILAN_LOG_DOSYASI,
+    seviye=None,
+    konsol=True,
+    rotasyon=True,
+    maks_bayt=10 * 1024 * 1024,  # 10 MB
+    yedek_sayisi=5,
+    **ek_parametreler
 ):
     """
-    Proje genelinde kullanilacak merkezi logger'i yapilandirir.
+    Proje genelinde kullanilacak merkezi kayitciyi (logger) yapilandirir.
 
     Args:
-        name (str): Logger adi veya hiyerarsik modul adi.
-        log_file (str): Log dosyasinin kaydedilecegi yol.
-        level (int): logging.DEBUG, INFO vb. None ise env degiskeni veya INFO kullanilir.
-        console (bool): Konsola log basilip basilmayacagi.
-        rotate (bool): Dosya boyutuna gore rotasyon yapilip yapilmayacagi.
-        max_bytes (int): Log dosyasinin ulasabilecegi maksimum bayt boyutu.
-        backup_count (int): Saklanacak gecmis log dosyasi adedi.
+        isim (str): Kayitci adi veya modul hiyerarsisi.
+        log_dosyasi (str): Log dosyasinin kaydedilecegi dosya yolu.
+        seviye (int): logging.DEBUG, INFO vb.
+        konsol (bool): Konsola log basilip basilmayacagi.
+        rotasyon (bool): Dosya boyutuna gore rotasyon yapilip yapilmayacagi.
+        maks_bayt (int): Bir log dosyasinin ulasabilecegi azami bayt boyutu.
+        yedek_sayisi (int): Saklanacak gecmis log dosyasi sayisi.
 
     Returns:
-        logging.Logger: Yapilandirilmis logger ornegi.
+        logging.Logger: Yapilandirilmis logger nesnesi.
     """
-    if level is None:
-        level = get_log_level_from_env(logging.INFO)
+    isim = ek_parametreler.get("name", isim)
+    log_dosyasi = ek_parametreler.get("log_file", log_dosyasi)
+    seviye = ek_parametreler.get("level", seviye)
+    konsol = ek_parametreler.get("console", konsol)
+    rotasyon = ek_parametreler.get("rotate", rotasyon)
+    maks_bayt = ek_parametreler.get("max_bytes", maks_bayt)
+    yedek_sayisi = ek_parametreler.get("backup_count", yedek_sayisi)
 
-    logger = logging.getLogger(name)
-    logger.setLevel(level)
+    if seviye is None:
+        seviye = get_log_level_from_env(logging.INFO)
 
-    # Zaten handler tanimlanmissa tekrar ekleme (duplicate log onleme)
-    if logger.handlers:
-        return logger
+    kayitci = logging.getLogger(isim)
+    kayitci.setLevel(seviye)
 
-    formatter = logging.Formatter(fmt=DEFAULT_LOG_FORMAT, datefmt=DATE_FORMAT)
+    # Zaten handler tanimlanmissa tekrar ekleme (cift log yazimini onler)
+    if kayitci.handlers:
+        return kayitci
+
+    bicimlendirici = logging.Formatter(fmt=VARSAYILAN_LOG_FORMATI, datefmt=TARIH_FORMATI)
 
     # 1. Konsol Handler (Guvenli cikis)
-    if console:
-        console_handler = SafeStreamHandler(sys.stdout)
-        console_handler.setLevel(level)
-        console_handler.setFormatter(formatter)
-        logger.addHandler(console_handler)
+    if konsol:
+        konsol_isleyici = SafeStreamHandler(sys.stdout)
+        konsol_isleyici.setLevel(seviye)
+        konsol_isleyici.setFormatter(bicimlendirici)
+        kayitci.addHandler(konsol_isleyici)
 
     # 2. Dosya Handler (Rotasyonlu)
-    if log_file:
+    if log_dosyasi:
         try:
-            log_dir = os.path.dirname(log_file)
-            if log_dir:
-                os.makedirs(log_dir, exist_ok=True)
+            dizin_yolu = os.path.dirname(log_dosyasi)
+            if dizin_yolu:
+                os.makedirs(dizin_yolu, exist_ok=True)
 
-            if rotate:
-                file_handler = RotatingFileHandler(
-                    log_file,
-                    maxBytes=max_bytes,
-                    backupCount=backup_count,
+            if rotasyon:
+                dosya_isleyici = RotatingFileHandler(
+                    log_dosyasi,
+                    maxBytes=maks_bayt,
+                    backupCount=yedek_sayisi,
                     encoding="utf-8"
                 )
             else:
-                file_handler = logging.FileHandler(log_file, encoding="utf-8")
+                dosya_isleyici = logging.FileHandler(log_dosyasi, encoding="utf-8")
 
-            file_handler.setLevel(level)
-            file_handler.setFormatter(formatter)
-            logger.addHandler(file_handler)
-        except Exception as e:
-            logger.warning(f"Log dosyasi olusturulamadi ({log_file}): {e}")
+            dosya_isleyici.setLevel(seviye)
+            dosya_isleyici.setFormatter(bicimlendirici)
+            kayitci.addHandler(dosya_isleyici)
+        except Exception as hata:
+            kayitci.warning(f"Log dosyasi olusturulamadi ({log_dosyasi}): {hata}")
 
-    # Root logger'a yayilmasini kontrol et
-    logger.propagate = False
+    # Loglarin kok (root) kayitciya yayilmasini engelle
+    kayitci.propagate = False
 
-    return logger
+    return kayitci
 
 
-def get_logger(module_name=None):
+def get_logger(modul_adi=None, **ek_parametreler):
     """
-    Moduller icin hazir logger nesnesi dondurur.
-    Eger merkezi logger kurulmadiysa otomatik yapilandirir.
-
-    Kullanim:
-        from utils.logger import get_logger
-        logger = get_logger(__name__)
+    Moduller icin hazir kayitci nesnesi dondurur.
+    Eger merkezi kayitci kurulmadiysa otomatik yapilandirir.
     """
-    base_logger = logging.getLogger("DentalScanner")
-    if not base_logger.handlers:
+    modul_adi = ek_parametreler.get("module_name", modul_adi)
+
+    kok_kayitci = logging.getLogger("DentalScanner")
+    if not kok_kayitci.handlers:
         setup_logger("DentalScanner")
 
-    if not module_name:
-        return base_logger
+    if not modul_adi:
+        return kok_kayitci
 
-    child_logger = logging.getLogger(f"DentalScanner.{module_name}")
-    child_logger.setLevel(base_logger.level)
-    return child_logger
-
+    alt_kayitci = logging.getLogger(f"DentalScanner.{modul_adi}")
+    alt_kayitci.setLevel(kok_kayitci.level)
+    return alt_kayitci

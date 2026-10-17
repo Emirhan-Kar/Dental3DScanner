@@ -12,221 +12,249 @@ from utils.validator import validate_dental_sample, get_safe_path
 
 logger = get_logger(__name__)
 
-# FDI Diş Standart Numaraları (11-48 arası 32 diş + 0 Diş Eti)
-FDI_CLASSES = [0] + [
+# FDI Dis Standart Numaralari (11-48 arasi 32 dis + 0 Dis Eti)
+FDI_SINIFLARI = [0] + [
     11, 12, 13, 14, 15, 16, 17, 18,
     21, 22, 23, 24, 25, 26, 27, 28,
     31, 32, 33, 34, 35, 36, 37, 38,
     41, 42, 43, 44, 45, 46, 47, 48
 ]
 
-LABEL_TO_IDX = {fdi: idx for idx, fdi in enumerate(FDI_CLASSES)}
-IDX_TO_LABEL = {idx: fdi for idx, fdi in enumerate(FDI_CLASSES)}
+ETIKETTEN_INDEKSE = {fdi: indeks for indeks, fdi in enumerate(FDI_SINIFLARI)}
+INDEKSTEN_ETIKETE = {indeks: fdi for indeks, fdi in enumerate(FDI_SINIFLARI)}
+
+# Geriye donuk uyumluluk takma adlari (backward-compatibility aliases)
+FDI_CLASSES = FDI_SINIFLARI
+LABEL_TO_IDX = ETIKETTEN_INDEKSE
+IDX_TO_LABEL = INDEKSTEN_ETIKETE
 
 
 class DentalMeshDataset(data.Dataset):
     def __init__(
         self,
-        data_root="data/3DTeethData",
-        parts=None,
-        num_points=8192,
-        augment=False,
-        filter_invalid=False,
-        safe_mode=True
+        veri_koku="data/3DTeethData",
+        parcalar=None,
+        nokta_sayisi=8192,
+        veri_artirma=False,
+        gecersizleri_ele=False,
+        guvenli_mod=True,
+        **ek_parametreler
     ):
         """
-        Teeth3DS Veri Yükleyici (PyTorch).
+        Teeth3DS Veri Yukleyici (PyTorch).
 
         Args:
-            data_root (str): Veri seti kök dizini.
-            parts (list): Yüklenecek parça klasörleri (ör. ["data_part_1"]).
-            num_points (int): Her örnekten çekilecek nokta sayısı (pozitif tamsayı).
-            augment (bool): Rastgele döndürme ve gürültü ekleme aktifliği.
-            filter_invalid (bool): Başlangıçta tüm vakaları doğrulayıp bozuk olanları ayıklar.
-            safe_mode (bool): Okuma hatası olan vakalarda eğitimi çökertmek yerine güvenli vaka ikamesi yapar.
+            veri_koku (str): Veri seti kok dizini.
+            parcalar (list): Yuklenecek parca klasorleri (or. ["data_part_1"]).
+            nokta_sayisi (int): Her ornekten cekilecek nokta sayisi (pozitif tamsayi).
+            veri_artirma (bool): Rastgele dondurme ve gurultu ekleme aktifligi.
+            gecersizleri_ele (bool): Baslangicta tum vakalari dogrulayip bozuk olanlari ayiklar.
+            guvenli_mod (bool): Okuma hatasi olan vakalarda egitimi cokertmek yerine guvenli vaka ikamesi yapar.
 
         Raises:
-            TypeError: Argüman tipleri geçersiz ise.
-            ValueError: num_points <= 0 ise.
-            FileNotFoundError: data_root mevcut değilse.
+            TypeError: Arguman tipleri gecersiz ise.
+            ValueError: nokta_sayisi <= 0 ise.
+            FileNotFoundError: veri_koku mevcut degilse.
         """
         super().__init__()
 
-        if not isinstance(data_root, str):
-            raise TypeError(f"data_root string olmalıdır, alınan: {type(data_root).__name__}")
-        if not os.path.exists(data_root):
-            raise FileNotFoundError(f"Veri seti kök dizini bulunamadı: {os.path.abspath(data_root)}")
+        veri_koku = ek_parametreler.get("data_root", veri_koku)
+        parcalar = ek_parametreler.get("parts", parcalar)
+        nokta_sayisi = ek_parametreler.get("num_points", nokta_sayisi)
+        veri_artirma = ek_parametreler.get("augment", ek_parametreler.get("augmentation", veri_artirma))
+        gecersizleri_ele = ek_parametreler.get("filter_invalid", gecersizleri_ele)
+        guvenli_mod = ek_parametreler.get("safe_mode", guvenli_mod)
 
-        if not isinstance(num_points, int) or num_points <= 0:
-            raise ValueError(f"num_points pozitif bir tamsayı olmalıdır, alınan: {num_points}")
+        if not isinstance(veri_koku, str):
+            raise TypeError(f"veri_koku string olmalidir, alinan: {type(veri_koku).__name__}")
+        if not os.path.exists(veri_koku):
+            raise FileNotFoundError(f"Veri seti kok dizini bulunamadi: {os.path.abspath(veri_koku)}")
 
-        if parts is None:
-            parts = ["data_part_1"]
-        elif not isinstance(parts, (list, tuple)):
-            raise TypeError(f"parts liste veya demet (tuple) olmalıdır, alınan: {type(parts).__name__}")
+        if not isinstance(nokta_sayisi, int) or nokta_sayisi <= 0:
+            raise ValueError(f"nokta_sayisi pozitif bir tamsayi olmalidir, alinan: {nokta_sayisi}")
 
-        self.data_root = data_root
-        self.num_points = num_points
-        self.augment = bool(augment)
-        self.safe_mode = bool(safe_mode)
-        self.samples = []
+        if parcalar is None:
+            parcalar = ["data_part_1"]
+        elif not isinstance(parcalar, (list, tuple)):
+            raise TypeError(f"parcalar liste veya demet (tuple) olmalidir, alinan: {type(parcalar).__name__}")
 
-        # Part klasörlerindeki tüm .obj ve .json çiftlerini topla
-        for part in parts:
-            part_path = os.path.join(data_root, str(part))
-            if not os.path.exists(part_path):
-                logger.warning(f"Belirtilen veri seti alt parçası bulunamadı, atlanıyor: {part_path}")
+        self.veri_koku = veri_koku
+        self.nokta_sayisi = nokta_sayisi
+        self.veri_artirma = bool(veri_artirma)
+        self.guvenli_mod = bool(guvenli_mod)
+        self.ornekler = []
+
+        # Takma ozellikler
+        self.data_root = self.veri_koku
+        self.num_points = self.nokta_sayisi
+        self.augment = self.veri_artirma
+        self.safe_mode = self.guvenli_mod
+
+        # Parca klasorlerindeki tum .obj ve .json ciftlerini topla
+        for parca in parcalar:
+            parca_yolu = os.path.join(veri_koku, str(parca))
+            if not os.path.exists(parca_yolu):
+                logger.warning(f"Belirtilen veri seti alt parcasi bulunamadi, atlaniyor: {parca_yolu}")
                 continue
 
-            obj_files = glob.glob(os.path.join(part_path, "*", "*", "*.obj"))
-            for obj_f in obj_files:
-                base_dir = os.path.dirname(obj_f)
-                base_name = os.path.splitext(os.path.basename(obj_f))[0]
-                json_f = os.path.join(base_dir, f"{base_name}.json")
+            obj_dosyalari = glob.glob(os.path.join(parca_yolu, "*", "*", "*.obj"))
+            for obj_dosya in obj_dosyalari:
+                ana_dizin = os.path.dirname(obj_dosya)
+                temel_ad = os.path.splitext(os.path.basename(obj_dosya))[0]
+                json_dosya = os.path.join(ana_dizin, f"{temel_ad}.json")
 
-                if os.path.exists(json_f):
-                    self.samples.append((obj_f, json_f))
+                if os.path.exists(json_dosya):
+                    self.ornekler.append((obj_dosya, json_dosya))
                 else:
-                    logger.debug(f"JSON etiketi bulunamadı, atlandı: {obj_f}")
+                    logger.debug(f"JSON etiketi bulunamadi, atlandi: {obj_dosya}")
 
-        # İsteğe bağlı ön doğrulama ve bozuk vakaları ayıklama
-        if filter_invalid and self.samples:
-            valid_samples = []
-            for obj_f, json_f in self.samples:
-                res = validate_dental_sample(obj_f, json_f, min_vertices=100)
-                if res.is_valid:
-                    valid_samples.append((obj_f, json_f))
+        # Istege bagli on dogrulama ve bozuk vakalari ayiklama
+        if gecersizleri_ele and self.ornekler:
+            gecerli_ornekler = []
+            for obj_dosya, json_dosya in self.ornekler:
+                sonuc = validate_dental_sample(obj_dosya, json_dosya, min_kose=100)
+                if sonuc.gecerli_mi:
+                    gecerli_ornekler.append((obj_dosya, json_dosya))
                 else:
-                    logger.warning(f"Bozuk vaka ayiklandi ({obj_f}): {res.error_message}")
-            filtered_count = len(self.samples) - len(valid_samples)
-            if filtered_count > 0:
-                logger.info(f"On dogrulama ile {filtered_count} adet gecersiz vaka ayiklandi.")
-            self.samples = valid_samples
+                    logger.warning(f"Bozuk vaka ayiklandi ({obj_dosya}): {sonuc.hata_mesaji}")
+            elenen_sayi = len(self.ornekler) - len(gecerli_ornekler)
+            if elenen_sayi > 0:
+                logger.info(f"On dogrulama ile {elenen_sayi} adet gecersiz vaka ayiklandi.")
+            self.ornekler = gecerli_ornekler
 
-        logger.info(f"[{', '.join(parts)}] icinde toplam {len(self.samples)} adet etiketli vaka bulundu.")
+        logger.info(f"[{', '.join(parcalar)}] icinde toplam {len(self.ornekler)} adet etiketli vaka bulundu.")
+
+    @property
+    def samples(self):
+        return self.ornekler
+
+    @samples.setter
+    def samples(self, value):
+        self.ornekler = value
 
     def __len__(self):
-        return len(self.samples)
+        return len(self.ornekler)
 
-    def _normalize_points(self, points):
-        """Merkezleme ve birim küreye ölçekleme yapar."""
-        if len(points) == 0:
-            return points
-        centroid = np.mean(points, axis=0)
-        points -= centroid
-        distances = np.sqrt(np.sum(points ** 2, axis=1))
-        max_distance = np.max(distances) if len(distances) > 0 else 0.0
-        if max_distance > 1e-8:
-            points /= max_distance
-        return points
+    def _normalize_points(self, noktalar):
+        """Merkezleme ve birim kureye olcekleme yapar."""
+        if len(noktalar) == 0:
+            return noktalar
+        merkez = np.mean(noktalar, axis=0)
+        noktalar -= merkez
+        uzakliklar = np.sqrt(np.sum(noktalar ** 2, axis=1))
+        en_buyuk_uzaklik = np.max(uzakliklar) if len(uzakliklar) > 0 else 0.0
+        if en_buyuk_uzaklik > 1e-8:
+            noktalar /= en_buyuk_uzaklik
+        return noktalar
 
-    def _augment(self, points):
-        """Z ekseni etrafında rastgele döndürme ve küçük Gaussian gürültü ekler."""
-        theta = np.random.uniform(0, 2 * np.pi)
-        rotation_matrix = np.array([
-            [np.cos(theta), -np.sin(theta), 0],
-            [np.sin(theta),  np.cos(theta), 0],
-            [0,             0,              1]
-        ], dtype=points.dtype)
+    def _augment(self, noktalar):
+        """Z ekseni etrafinda rastgele dondurme ve kucuk Gaussian gurultu ekler."""
+        aci = np.random.uniform(0, 2 * np.pi)
+        dondurme_matrisi = np.array([
+            [np.cos(aci), -np.sin(aci), 0],
+            [np.sin(aci),  np.cos(aci), 0],
+            [0,            0,           1]
+        ], dtype=noktalar.dtype)
 
-        # Pozisyonları döndür
-        points[:, :3] = np.dot(points[:, :3], rotation_matrix)
-        # Varsa normalleri de aynı matrisle döndür
-        if points.shape[1] >= 6:
-            points[:, 3:6] = np.dot(points[:, 3:6], rotation_matrix)
+        # Pozisyonlari dondur
+        noktalar[:, :3] = np.dot(noktalar[:, :3], dondurme_matrisi)
+        # Varsa normalleri de ayni matrisle dondur
+        if noktalar.shape[1] >= 6:
+            noktalar[:, 3:6] = np.dot(noktalar[:, 3:6], dondurme_matrisi)
 
-        jitter = np.random.normal(0.0, 0.01, size=points[:, :3].shape).astype(points.dtype)
-        points[:, :3] += jitter
-        return points
+        gurultu = np.random.normal(0.0, 0.01, size=noktalar[:, :3].shape).astype(noktalar.dtype)
+        noktalar[:, :3] += gurultu
+        return noktalar
 
-    def _load_sample(self, idx):
-        """Tek bir örneği yükler ve tensörlere dönüştürür."""
-        obj_path, json_path = self.samples[idx]
+    def _load_sample(self, indeks):
+        """Tek bir ornegi yukler ve tensorlere donusturur."""
+        obj_yolu, json_yolu = self.ornekler[indeks]
 
         # 1. Mesh'i Open3D ile oku
-        mesh = o3d.io.read_triangle_mesh(get_safe_path(obj_path))
-        vertices = np.asarray(mesh.vertices, dtype=np.float32)
-        if len(vertices) == 0:
-            raise ValueError(f"Mesh dosyası boş veya köşe noktası içermiyor: {obj_path}")
+        mesh = o3d.io.read_triangle_mesh(get_safe_path(obj_yolu))
+        koseler = np.asarray(mesh.vertices, dtype=np.float32)
+        if len(koseler) == 0:
+            raise ValueError(f"Mesh dosyasi bos veya kose noktasi icermiyor: {obj_yolu}")
 
         try:
             mesh.compute_vertex_normals()
-            normals = np.asarray(mesh.vertex_normals, dtype=np.float32)
-            if len(normals) != len(vertices):
-                normals = np.zeros_like(vertices, dtype=np.float32)
+            normaller = np.asarray(mesh.vertex_normals, dtype=np.float32)
+            if len(normaller) != len(koseler):
+                normaller = np.zeros_like(koseler, dtype=np.float32)
         except Exception:
-            normals = np.zeros_like(vertices, dtype=np.float32)
+            normaller = np.zeros_like(koseler, dtype=np.float32)
 
         # 2. JSON etiketlerini oku
-        with open(json_path, "r", encoding="utf-8") as f:
-            meta = json.load(f)
+        with open(json_yolu, "r", encoding="utf-8") as dosya:
+            ust_veri = json.load(dosya)
 
-        raw_labels = meta.get("labels", [])
-        if not isinstance(raw_labels, list):
-            raw_labels = []
+        ham_etiketler = ust_veri.get("labels", [])
+        if not isinstance(ham_etiketler, list):
+            ham_etiketler = []
 
-        if len(raw_labels) == len(vertices):
-            vertex_labels = np.array(raw_labels, dtype=np.int64)
+        if len(ham_etiketler) == len(koseler):
+            kose_etiketleri = np.array(ham_etiketler, dtype=np.int64)
         else:
-            vertex_labels = np.zeros(len(vertices), dtype=np.int64)
-            faces = np.asarray(mesh.triangles)
-            for f_idx, face in enumerate(faces):
-                if f_idx < len(raw_labels):
-                    lbl_val = raw_labels[f_idx]
-                    if isinstance(lbl_val, (int, float)):
-                        vertex_labels[face] = int(lbl_val)
+            kose_etiketleri = np.zeros(len(koseler), dtype=np.int64)
+            yuzler = np.asarray(mesh.triangles)
+            for yuz_indeks, yuz in enumerate(yuzler):
+                if yuz_indeks < len(ham_etiketler):
+                    etiket_degeri = ham_etiketler[yuz_indeks]
+                    if isinstance(etiket_degeri, (int, float)):
+                        kose_etiketleri[yuz] = int(etiket_degeri)
 
-        # 3. Sabit sayıda nokta örnekle
-        num_v = len(vertices)
-        if num_v >= self.num_points:
-            choice = np.random.choice(num_v, self.num_points, replace=False)
+        # 3. Sabit sayida nokta ornekle
+        kose_sayisi = len(koseler)
+        if kose_sayisi >= self.nokta_sayisi:
+            secim = np.random.choice(kose_sayisi, self.nokta_sayisi, replace=False)
         else:
-            choice = np.random.choice(num_v, self.num_points, replace=True)
+            secim = np.random.choice(kose_sayisi, self.nokta_sayisi, replace=True)
 
-        selected_vertices = vertices[choice]
-        selected_normals = normals[choice]
-        selected_labels = vertex_labels[choice]
+        secilen_koseler = koseler[secim]
+        secilen_normaller = normaller[secim]
+        secilen_etiketler = kose_etiketleri[secim]
 
-        # 4. Normalizasyon ve Veri Artırma
-        selected_vertices = self._normalize_points(selected_vertices)
-        features = np.concatenate([selected_vertices, selected_normals], axis=-1)
+        # 4. Normalizasyon ve Veri Artirma
+        secilen_koseler = self._normalize_points(secilen_koseler)
+        oznitelikler = np.concatenate([secilen_koseler, secilen_normaller], axis=-1)
 
-        # NaN/Inf temizliği
-        if not np.all(np.isfinite(features)):
-            features = np.nan_to_num(features, nan=0.0, posinf=1.0, neginf=-1.0)
+        # NaN/Inf temizligi
+        if not np.all(np.isfinite(oznitelikler)):
+            oznitelikler = np.nan_to_num(oznitelikler, nan=0.0, posinf=1.0, neginf=-1.0)
 
-        if self.augment:
-            features = self._augment(features)
+        if self.veri_artirma:
+            oznitelikler = self._augment(oznitelikler)
 
-        mapped_labels = np.array([LABEL_TO_IDX.get(int(lbl), 0) for lbl in selected_labels], dtype=np.int64)
+        eslenmis_etiketler = np.array(
+            [ETIKETTEN_INDEKSE.get(int(etiket), 0) for etiket in secilen_etiketler], dtype=np.int64
+        )
 
         return {
-            "points": torch.tensor(features, dtype=torch.float32).transpose(0, 1),
-            "labels": torch.tensor(mapped_labels, dtype=torch.long),
-            "patient_id": str(meta.get("id_patient", "unknown"))
+            "points": torch.tensor(oznitelikler, dtype=torch.float32).transpose(0, 1),
+            "labels": torch.tensor(eslenmis_etiketler, dtype=torch.long),
+            "patient_id": str(ust_veri.get("id_patient", "unknown"))
         }
 
-    def __getitem__(self, idx):
-        if idx < 0 or idx >= len(self.samples):
-            raise IndexError(f"İndeks sınır dışı: {idx} (Veri seti boyutu: {len(self.samples)})")
+    def __getitem__(self, indeks):
+        if indeks < 0 or indeks >= len(self.ornekler):
+            raise IndexError(f"Indeks sinir disi: {indeks} (Veri seti boyutu: {len(self.ornekler)})")
 
-        if not self.safe_mode:
-            return self._load_sample(idx)
+        if not self.guvenli_mod:
+            return self._load_sample(indeks)
 
-        # Güvenli mod: Bir vaka bozuksa en fazla 5 kez alternatif vaka dener
-        attempts = 0
-        current_idx = idx
-        while attempts < 5:
+        deneme = 0
+        guncel_indeks = indeks
+        while deneme < 5:
             try:
-                return self._load_sample(current_idx)
-            except Exception as e:
-                attempts += 1
-                bad_obj = self.samples[current_idx][0]
+                return self._load_sample(guncel_indeks)
+            except Exception as hata:
+                deneme += 1
+                bozuk_obj = self.ornekler[guncel_indeks][0]
                 logger.warning(
-                    f"Bozuk veri ornegi ({bad_obj}): {e}. "
-                    f"Guvenli mod devrede, baska ornek deneniyor ({attempts}/5)..."
+                    f"Bozuk veri ornegi ({bozuk_obj}): {hata}. "
+                    f"Guvenli mod devrede, baska ornek deneniyor ({deneme}/5)..."
                 )
-                current_idx = random.randint(0, len(self.samples) - 1)
+                guncel_indeks = random.randint(0, len(self.ornekler) - 1)
 
-        # 5 deneme de başarısız olursa son hatayı fırlat
-        raise RuntimeError(f"Ust uste 5 vaka yuklenemedi, veri seti butunlugu bozulmus olabilir.")
+        # 5 deneme de basarisiz olursa hata firlat
+        raise RuntimeError("Ust uste 5 vaka yuklenemedi, veri seti butunlugu bozulmus olabilir.")

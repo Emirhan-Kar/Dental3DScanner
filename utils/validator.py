@@ -2,409 +2,421 @@ import os
 import sys
 import json
 import argparse
-from dataclasses import dataclass, field
-from typing import Dict, Any, Optional, Tuple, List
+from typing import Dict, Any, Optional, List
 import numpy as np
 import cv2
 import open3d as o3d
 
 # Proje kok dizinini sys.path'e ekle
-ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-if ROOT_DIR not in sys.path:
-    sys.path.insert(0, ROOT_DIR)
+KOK_DIZIN = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if KOK_DIZIN not in sys.path:
+    sys.path.insert(0, KOK_DIZIN)
 
 from utils.logger import get_logger
 
-logger = get_logger(__name__)
+kayitci = get_logger(__name__)
 
 # Gecerli FDI Dis Siniflari (0: Dis Eti, 11-48: Disler)
-VALID_FDI_CLASSES = set([0] + [
+GECERLI_FDI_SINIFLARI = set([0] + [
     11, 12, 13, 14, 15, 16, 17, 18,
     21, 22, 23, 24, 25, 26, 27, 28,
     31, 32, 33, 34, 35, 36, 37, 38,
     41, 42, 43, 44, 45, 46, 47, 48
 ])
+VALID_FDI_CLASSES = GECERLI_FDI_SINIFLARI
 
 
-def get_safe_path(path: str) -> str:
+def get_safe_path(dosya_yolu: str, **ek_parametreler) -> str:
     """
     Windows'ta Turkce veya ozel karakter iceren dosya yollarini
     C++ cekirdekli kutuphaneler (Open3D, OpenCV) icin guvenli 8.3 kisa yola donusturur.
     """
-    if os.name == "nt" and os.path.exists(path):
+    dosya_yolu = ek_parametreler.get("path", dosya_yolu)
+    if os.name == "nt" and os.path.exists(dosya_yolu):
         try:
             import ctypes
-            buffer = ctypes.create_unicode_buffer(1024)
-            if ctypes.windll.kernel32.GetShortPathNameW(str(path), buffer, 1024):
-                return buffer.value
+            arabellek = ctypes.create_unicode_buffer(1024)
+            if ctypes.windll.kernel32.GetShortPathNameW(str(dosya_yolu), arabellek, 1024):
+                return arabellek.value
         except Exception:
             pass
-    return str(path)
+    return str(dosya_yolu)
 
 
-@dataclass
 class ValidationResult:
     """Veri dogrulama sonuc nesnesi."""
-    is_valid: bool
-    error_message: Optional[str] = None
-    warning_message: Optional[str] = None
-    details: Dict[str, Any] = field(default_factory=dict)
+    def __init__(
+        self,
+        gecerli_mi: bool = True,
+        hata_mesaji: Optional[str] = None,
+        uyari_mesaji: Optional[str] = None,
+        detaylar: Optional[Dict[str, Any]] = None,
+        **ek_parametreler
+    ):
+        self.gecerli_mi = ek_parametreler.get("is_valid", gecerli_mi)
+        self.hata_mesaji = ek_parametreler.get("error_message", hata_mesaji)
+        self.uyari_mesaji = ek_parametreler.get("warning_message", uyari_mesaji)
+        self.detaylar = ek_parametreler.get("details", detaylar if detaylar is not None else {})
+
+    @property
+    def is_valid(self):
+        return self.gecerli_mi
+
+    @property
+    def error_message(self):
+        return self.hata_mesaji
+
+    @property
+    def warning_message(self):
+        return self.uyari_mesaji
+
+    @property
+    def details(self):
+        return self.detaylar
 
     def __bool__(self):
-        return self.is_valid
+        return bool(self.gecerli_mi)
 
 
-def validate_mesh(obj_path: str, min_vertices: int = 100) -> ValidationResult:
+def validate_mesh(obj_yolu: str, min_kose: int = 100, **ek_parametreler) -> ValidationResult:
     """
     3D Mesh dosyasinin (.obj, .ply, .stl) fiziksel ve geometrik gecerliligini denetler.
-
-    Denetimler:
-    - Dosya varligi, okunabilirligi ve boyutu (>0 bayt).
-    - Open3D ile basarili parse edilme.
-    - Kose (vertex) sayisi >= min_vertices.
-    - Tum koordinatlarin sonlu (finite, NaN veya Inf icermeyen) olmasi.
-    - Sinirlayici kutu (bounding box) capi > 0 (noktalar tek bir noktaya cokmemis).
-
-    Args:
-        obj_path (str): 3D model dosya yolu.
-        min_vertices (int): Kabul edilebilir minimum kose sayisi.
-
-    Returns:
-        ValidationResult: Dogrulama sonucu ve detaylari.
     """
-    if not isinstance(obj_path, str) or not obj_path.strip():
+    obj_yolu = ek_parametreler.get("obj_path", obj_yolu)
+    min_kose = ek_parametreler.get("min_vertices", min_kose)
+
+    if not isinstance(obj_yolu, str) or not obj_yolu.strip():
         return ValidationResult(False, "Dosya yolu bos veya string tipinde degil.")
 
-    if not os.path.exists(obj_path):
-        return ValidationResult(False, f"Dosya mevcut degil: {obj_path}")
+    if not os.path.exists(obj_yolu):
+        return ValidationResult(False, f"Dosya mevcut degil: {obj_yolu}")
 
     try:
-        file_size = os.path.getsize(obj_path)
-        if file_size == 0:
-            return ValidationResult(False, f"Dosya boyutu 0 bayt (bos dosya): {obj_path}")
-    except OSError as e:
-        return ValidationResult(False, f"Dosya boyutuna erisilemedi: {e}")
+        dosya_boyutu = os.path.getsize(obj_yolu)
+        if dosya_boyutu == 0:
+            return ValidationResult(False, f"Dosya boyutu 0 bayt (bos dosya): {obj_yolu}")
+    except OSError as hata:
+        return ValidationResult(False, f"Dosya boyutuna erisilemedi: {hata}")
 
-    safe_path = get_safe_path(obj_path)
+    guvenli_yol = get_safe_path(obj_yolu)
     try:
-        mesh = o3d.io.read_triangle_mesh(safe_path)
-    except Exception as e:
-        return ValidationResult(False, f"Open3D mesh dosyasini okuyamadi: {e}")
+        mesh = o3d.io.read_triangle_mesh(guvenli_yol)
+    except Exception as hata:
+        return ValidationResult(False, f"Open3D mesh dosyasini okuyamadi: {hata}")
 
-    vertices = np.asarray(mesh.vertices)
-    num_v = len(vertices)
+    koseler = np.asarray(mesh.vertices)
+    kose_sayisi = len(koseler)
 
-    if num_v < min_vertices:
+    if kose_sayisi < min_kose:
         return ValidationResult(
             False,
-            f"Kose sayisi yetersiz ({num_v} < {min_vertices}): {obj_path}",
-            details={"vertex_count": num_v}
+            f"Kose sayisi yetersiz ({kose_sayisi} < {min_kose}): {obj_yolu}",
+            detaylar={"vertex_count": kose_sayisi}
         )
 
     # NaN / Inf kontrolu
-    if not np.all(np.isfinite(vertices)):
-        nan_count = np.sum(~np.isfinite(vertices))
+    if not np.all(np.isfinite(koseler)):
+        nan_sayisi = np.sum(~np.isfinite(koseler))
         return ValidationResult(
             False,
-            f"Mesh koordinatlarinda {nan_count} adet NaN/Inf degeri tespit edildi.",
-            details={"vertex_count": num_v, "nan_count": int(nan_count)}
+            f"Mesh koordinatlarinda {nan_sayisi} adet NaN/Inf degeri tespit edildi.",
+            detaylar={"vertex_count": kose_sayisi, "nan_count": int(nan_sayisi)}
         )
 
     # Boyut ve cap denetimi
-    bbox_min = np.min(vertices, axis=0)
-    bbox_max = np.max(vertices, axis=0)
-    extent = bbox_max - bbox_min
-    diagonal = np.linalg.norm(extent)
+    kutu_min = np.min(koseler, axis=0)
+    kutu_maks = np.max(koseler, axis=0)
+    boyut = kutu_maks - kutu_min
+    kosegen = np.linalg.norm(boyut)
 
-    if diagonal < 1e-4:
+    if kosegen < 1e-4:
         return ValidationResult(
             False,
-            f"Mesh geometrisi dejenere (cap cok kucuk: {diagonal:.6f} mm): {obj_path}",
-            details={"vertex_count": num_v, "bounding_box_diagonal": float(diagonal)}
+            f"Mesh geometrisi dejenere (cap cok kucuk: {kosegen:.6f} mm): {obj_yolu}",
+            detaylar={"vertex_count": kose_sayisi, "bounding_box_diagonal": float(kosegen)}
         )
 
-    num_triangles = len(mesh.triangles)
+    ucgen_sayisi = len(mesh.triangles)
     return ValidationResult(
         True,
-        details={
-            "vertex_count": num_v,
-            "triangle_count": num_triangles,
-            "bounding_box_diagonal": float(diagonal),
-            "file_size_bytes": file_size
+        detaylar={
+            "vertex_count": kose_sayisi,
+            "triangle_count": ucgen_sayisi,
+            "bounding_box_diagonal": float(kosegen),
+            "file_size_bytes": dosya_boyutu
         }
     )
 
 
 def validate_annotation(
-    json_path: str,
-    vertex_count: Optional[int] = None,
-    face_count: Optional[int] = None
+    json_yolu: str,
+    kose_sayisi: Optional[int] = None,
+    yuz_sayisi: Optional[int] = None,
+    **ek_parametreler
 ) -> ValidationResult:
     """
     JSON etiket dosyasinin formatini, semasini ve FDI standart uyumlulugunu denetler.
-
-    Denetimler:
-    - Dosya varligi ve gecerli JSON formati.
-    - 'labels' listesi mevcudiyeti.
-    - Etiketlerin tamsayi ve gecerli FDI numaralari (0, 11-48) olmasi.
-    - Varsa vertex_count veya face_count ile uzunluk uyumlulugu.
-
-    Args:
-        json_path (str): JSON dosya yolu.
-        vertex_count (int, optional): Karsilik gelen mesh'in kose sayisi.
-        face_count (int, optional): Karsilik gelen mesh'in yuz (poligon) sayisi.
-
-    Returns:
-        ValidationResult: Dogrulama sonucu.
     """
-    if not isinstance(json_path, str) or not json_path.strip():
+    json_yolu = ek_parametreler.get("json_path", json_yolu)
+    kose_sayisi = ek_parametreler.get("vertex_count", kose_sayisi)
+    yuz_sayisi = ek_parametreler.get("face_count", yuz_sayisi)
+
+    if not isinstance(json_yolu, str) or not json_yolu.strip():
         return ValidationResult(False, "JSON dosya yolu bos veya string degil.")
 
-    if not os.path.exists(json_path):
-        return ValidationResult(False, f"JSON etiket dosyasi bulunamadi: {json_path}")
+    if not os.path.exists(json_yolu):
+        return ValidationResult(False, f"JSON etiket dosyasi bulunamadi: {json_yolu}")
 
     try:
-        with open(json_path, "r", encoding="utf-8") as f:
-            data = json.load(f)
-    except json.JSONDecodeError as e:
-        return ValidationResult(False, f"JSON formati bozuk: {e}")
-    except Exception as e:
-        return ValidationResult(False, f"JSON dosyasi acilamadi: {e}")
+        with open(json_yolu, "r", encoding="utf-8") as dosya:
+            veri = json.load(dosya)
+    except json.JSONDecodeError as hata:
+        return ValidationResult(False, f"JSON formati bozuk: {hata}")
+    except Exception as hata:
+        return ValidationResult(False, f"JSON dosyasi acilamadi: {hata}")
 
-    if not isinstance(data, dict):
+    if not isinstance(veri, dict):
         return ValidationResult(False, "JSON kok elemani bir sozluk (dict) olmalidir.")
 
-    raw_labels = data.get("labels")
-    if raw_labels is None:
+    ham_etiketler = veri.get("labels")
+    if ham_etiketler is None:
         return ValidationResult(False, "JSON icinde 'labels' alani bulunamadi.")
 
-    if not isinstance(raw_labels, list):
-        return ValidationResult(False, f"'labels' bir liste olmalidir, alinan: {type(raw_labels).__name__}")
+    if not isinstance(ham_etiketler, list):
+        return ValidationResult(False, f"'labels' bir liste olmalidir, alinan: {type(ham_etiketler).__name__}")
 
-    num_labels = len(raw_labels)
-    if num_labels == 0:
+    etiket_sayisi = len(ham_etiketler)
+    if etiket_sayisi == 0:
         return ValidationResult(False, "Etiket listesi ('labels') bos.")
 
     # FDI deger kontrolu
-    unique_labels = set()
-    invalid_labels = set()
+    benzersiz_etiketler = set()
+    gecersiz_etiketler = set()
 
-    for idx, lbl in enumerate(raw_labels):
-        if not isinstance(lbl, (int, np.integer)):
-            invalid_labels.add(f"Tip:{type(lbl).__name__}")
+    for etiket in ham_etiketler:
+        if not isinstance(etiket, (int, np.integer)):
+            gecersiz_etiketler.add(f"Tip:{type(etiket).__name__}")
         else:
-            int_lbl = int(lbl)
-            unique_labels.add(int_lbl)
-            if int_lbl not in VALID_FDI_CLASSES:
-                invalid_labels.add(int_lbl)
+            tamsayi_etiket = int(etiket)
+            benzersiz_etiketler.add(tamsayi_etiket)
+            if tamsayi_etiket not in GECERLI_FDI_SINIFLARI:
+                gecersiz_etiketler.add(tamsayi_etiket)
 
-    if invalid_labels:
+    if gecersiz_etiketler:
         return ValidationResult(
             False,
-            f"Gecersiz FDI dis etiketleri tespit edildi: {list(invalid_labels)[:5]}",
-            details={"invalid_labels": list(invalid_labels), "total_labels": num_labels}
+            f"Gecersiz FDI dis etiketleri tespit edildi: {list(gecersiz_etiketler)[:5]}",
+            detaylar={"invalid_labels": list(gecersiz_etiketler), "total_labels": etiket_sayisi}
         )
 
-    warning_msg = None
-    # Uzunluk karsilastirmasi
-    if vertex_count is not None and face_count is not None:
-        if num_labels != vertex_count and num_labels != face_count:
-            warning_msg = (
-                f"Etiket sayisi ({num_labels}), ne kose sayisi ({vertex_count}) "
-                f"ne de poligon sayisi ({face_count}) ile tam eslesiyor."
+    uyari_metni = None
+    if kose_sayisi is not None and yuz_sayisi is not None:
+        if etiket_sayisi != kose_sayisi and etiket_sayisi != yuz_sayisi:
+            uyari_metni = (
+                f"Etiket sayisi ({etiket_sayisi}), ne kose sayisi ({kose_sayisi}) "
+                f"ne de poligon sayisi ({yuz_sayisi}) ile tam eslesiyor."
             )
 
     return ValidationResult(
         True,
-        warning_message=warning_msg,
-        details={
-            "label_count": num_labels,
-            "unique_classes_count": len(unique_labels),
-            "classes": sorted(list(unique_labels)),
-            "patient_id": data.get("id_patient", "unknown")
+        uyari_mesaji=uyari_metni,
+        detaylar={
+            "label_count": etiket_sayisi,
+            "unique_classes_count": len(benzersiz_etiketler),
+            "classes": sorted(list(benzersiz_etiketler)),
+            "patient_id": veri.get("id_patient", "unknown")
         }
     )
 
 
 def validate_dental_sample(
-    obj_path: str,
-    json_path: str,
-    min_vertices: int = 100
+    obj_yolu: str,
+    json_yolu: str,
+    min_kose: int = 100,
+    **ek_parametreler
 ) -> ValidationResult:
     """
     Hem 3D mesh hem de JSON etiket dosyasini birlikte butuncul olarak dogrular.
     """
-    mesh_res = validate_mesh(obj_path, min_vertices=min_vertices)
-    if not mesh_res.is_valid:
-        return ValidationResult(False, f"Mesh hatasi: {mesh_res.error_message}", details=mesh_res.details)
+    obj_yolu = ek_parametreler.get("obj_path", obj_yolu)
+    json_yolu = ek_parametreler.get("json_path", json_yolu)
+    min_kose = ek_parametreler.get("min_vertices", min_kose)
 
-    v_count = mesh_res.details.get("vertex_count")
-    t_count = mesh_res.details.get("triangle_count")
+    mesh_sonucu = validate_mesh(obj_yolu, min_kose=min_kose)
+    if not mesh_sonucu.gecerli_mi:
+        return ValidationResult(False, f"Mesh hatasi: {mesh_sonucu.hata_mesaji}", detaylar=mesh_sonucu.detaylar)
 
-    anno_res = validate_annotation(json_path, vertex_count=v_count, face_count=t_count)
-    if not anno_res.is_valid:
-        return ValidationResult(False, f"Etiket hatasi: {anno_res.error_message}", details=anno_res.details)
+    kose_adedi = mesh_sonucu.detaylar.get("vertex_count")
+    yuz_adedi = mesh_sonucu.detaylar.get("triangle_count")
 
-    combined_details = {
-        "mesh": mesh_res.details,
-        "annotation": anno_res.details
+    etiket_sonucu = validate_annotation(json_yolu, kose_sayisi=kose_adedi, yuz_sayisi=yuz_adedi)
+    if not etiket_sonucu.gecerli_mi:
+        return ValidationResult(False, f"Etiket hatasi: {etiket_sonucu.hata_mesaji}", detaylar=etiket_sonucu.detaylar)
+
+    birlesik_detaylar = {
+        "mesh": mesh_sonucu.detaylar,
+        "annotation": etiket_sonucu.detaylar
     }
     return ValidationResult(
         True,
-        warning_message=anno_res.warning_message,
-        details=combined_details
+        uyari_mesaji=etiket_sonucu.uyari_mesaji,
+        detaylar=birlesik_detaylar
     )
 
 
-def validate_point_cloud(pcd: o3d.geometry.PointCloud, min_points: int = 10) -> ValidationResult:
+def validate_point_cloud(nokta_bulutu: o3d.geometry.PointCloud, min_nokta: int = 10, **ek_parametreler) -> ValidationResult:
     """
     Open3D nokta bulutu nesnesini denetler.
     """
-    if pcd is None or not isinstance(pcd, o3d.geometry.PointCloud):
+    nokta_bulutu = ek_parametreler.get("pcd", nokta_bulutu)
+    min_nokta = ek_parametreler.get("min_points", min_nokta)
+
+    if nokta_bulutu is None or not isinstance(nokta_bulutu, o3d.geometry.PointCloud):
         return ValidationResult(False, "Girdi nesnesi gecerli bir open3d.geometry.PointCloud degil.")
 
-    pts = np.asarray(pcd.points)
-    num_pts = len(pts)
+    noktalar = np.asarray(nokta_bulutu.points)
+    nokta_sayisi = len(noktalar)
 
-    if num_pts < min_points:
-        return ValidationResult(False, f"Nokta sayisi yetersiz ({num_pts} < {min_points}).")
+    if nokta_sayisi < min_nokta:
+        return ValidationResult(False, f"Nokta sayisi yetersiz ({nokta_sayisi} < {min_nokta}).")
 
-    if not np.all(np.isfinite(pts)):
-        nan_count = int(np.sum(~np.isfinite(pts)))
-        return ValidationResult(False, f"Nokta bulutunda {nan_count} adet NaN/Inf koordinati bulundu.")
+    if not np.all(np.isfinite(noktalar)):
+        nan_sayisi = int(np.sum(~np.isfinite(noktalar)))
+        return ValidationResult(False, f"Nokta bulutunda {nan_sayisi} adet NaN/Inf koordinati bulundu.")
 
-    return ValidationResult(True, details={"point_count": num_pts})
+    return ValidationResult(True, detaylar={"point_count": nokta_sayisi})
 
 
-def validate_image_file(image_path: str, min_width: int = 10, min_height: int = 10) -> ValidationResult:
+def validate_image_file(gorsel_yolu: str, min_genislik: int = 10, min_yukseklik: int = 10, **ek_parametreler) -> ValidationResult:
     """
     2D gorsel dosyasinin (.png, .jpg vb.) fiziksel ve format gecerliligini denetler.
-    Windows Unicode yollarini guvenle okumak icin np.fromfile + imdecode kullanir.
     """
-    if not os.path.exists(image_path):
-        return ValidationResult(False, f"Gorsel dosyasi bulunamadi: {image_path}")
+    gorsel_yolu = ek_parametreler.get("image_path", gorsel_yolu)
+    min_genislik = ek_parametreler.get("min_width", min_genislik)
+    min_yukseklik = ek_parametreler.get("min_height", min_yukseklik)
+
+    if not os.path.exists(gorsel_yolu):
+        return ValidationResult(False, f"Gorsel dosyasi bulunamadi: {gorsel_yolu}")
 
     try:
-        data = np.fromfile(image_path, dtype=np.uint8)
-        img = cv2.imdecode(data, cv2.IMREAD_COLOR)
-    except Exception as e:
-        return ValidationResult(False, f"OpenCV gorseli okuyamadi: {e}")
+        ham_veri = np.fromfile(gorsel_yolu, dtype=np.uint8)
+        gorsel = cv2.imdecode(ham_veri, cv2.IMREAD_COLOR)
+    except Exception as hata:
+        return ValidationResult(False, f"OpenCV gorseli okuyamadi: {hata}")
 
-    if img is None:
-        return ValidationResult(False, f"Gorsel dosyasi bozuk veya acilamiyor: {image_path}")
+    if gorsel is None:
+        return ValidationResult(False, f"Gorsel dosyasi bozuk veya acilamiyor: {gorsel_yolu}")
 
-    h, w = img.shape[:2]
-    if h < min_height or w < min_width:
-        return ValidationResult(False, f"Gorsel cozunurlugu cok kucuk ({w}x{h} < {min_width}x{min_height}).")
+    yukseklik, genislik = gorsel.shape[:2]
+    if yukseklik < min_yukseklik or genislik < min_genislik:
+        return ValidationResult(False, f"Gorsel cozunurlugu cok kucuk ({genislik}x{yukseklik} < {min_genislik}x{min_yukseklik}).")
 
-    return ValidationResult(True, details={"width": w, "height": h, "channels": img.shape[2] if img.ndim == 3 else 1})
+    kanal_sayisi = gorsel.shape[2] if gorsel.ndim == 3 else 1
+    return ValidationResult(True, detaylar={"width": genislik, "height": yukseklik, "channels": kanal_sayisi})
 
 
 def scan_dataset(
-    data_root: str = "data/3DTeethData",
-    parts: Optional[List[str]] = None,
-    min_vertices: int = 100,
-    max_samples: Optional[int] = None
+    veri_koku: str = "data/3DTeethData",
+    parcalar: Optional[List[str]] = None,
+    min_kose: int = 100,
+    maks_ornek: Optional[int] = None,
+    **ek_parametreler
 ) -> Dict[str, Any]:
     """
     Veri seti dizinini tarayarak tum .obj ve .json ciftlerini dogrular ve rapor uretir.
-
-    Args:
-        data_root (str): Veri seti kok dizini.
-        parts (list, optional): Taranacak alt klasorler (orn: ["data_part_1"]).
-        min_vertices (int): Minimum kabul edilen vertex sayisi.
-        max_samples (int, optional): Maksimum taranacak vaka limiti (hizli kontrol icin).
-
-    Returns:
-        dict: Dogrulama istatistikleri ve tespit edilen sorunlar.
     """
     import glob
 
-    if parts is None:
-        parts = ["data_part_1"]
+    veri_koku = ek_parametreler.get("data_root", veri_koku)
+    parcalar = ek_parametreler.get("parts", parcalar)
+    min_kose = ek_parametreler.get("min_vertices", min_kose)
+    maks_ornek = ek_parametreler.get("max_samples", maks_ornek)
 
-    logger.info(f"Veri seti dogrulama taramasi baslatiliyor: {data_root}, Parcalar: {parts}")
+    if parcalar is None:
+        parcalar = ["data_part_1"]
 
-    total_scanned = 0
-    valid_count = 0
-    invalid_samples = []
-    warnings_list = []
+    kayitci.info(f"Veri seti dogrulama taramasi baslatiliyor: {veri_koku}, Parcalar: {parcalar}")
 
-    for part in parts:
-        part_path = os.path.join(data_root, str(part))
-        if not os.path.exists(part_path):
-            logger.warning(f"Alt parca klasoru bulunamadi: {part_path}")
+    toplam_taranan = 0
+    gecerli_sayisi = 0
+    gecersiz_ornekler = []
+    uyari_listesi = []
+
+    for parca in parcalar:
+        parca_yolu = os.path.join(veri_koku, str(parca))
+        if not os.path.exists(parca_yolu):
+            kayitci.warning(f"Alt parca klasoru bulunamadi: {parca_yolu}")
             continue
 
-        obj_files = glob.glob(os.path.join(part_path, "*", "*", "*.obj"))
-        for obj_f in obj_files:
-            if max_samples and total_scanned >= max_samples:
+        obj_dosyalari = glob.glob(os.path.join(parca_yolu, "*", "*", "*.obj"))
+        for obj_dosya in obj_dosyalari:
+            if maks_ornek and toplam_taranan >= maks_ornek:
                 break
 
-            base_dir = os.path.dirname(obj_f)
-            base_name = os.path.splitext(os.path.basename(obj_f))[0]
-            json_f = os.path.join(base_dir, f"{base_name}.json")
+            ana_dizin = os.path.dirname(obj_dosya)
+            temel_ad = os.path.splitext(os.path.basename(obj_dosya))[0]
+            json_dosya = os.path.join(ana_dizin, f"{temel_ad}.json")
 
-            total_scanned += 1
+            toplam_taranan += 1
 
-            if not os.path.exists(json_f):
-                invalid_samples.append({
-                    "sample": obj_f,
+            if not os.path.exists(json_dosya):
+                gecersiz_ornekler.append({
+                    "sample": obj_dosya,
                     "error": "Eslesen .json etiket dosyasi eksik."
                 })
                 continue
 
-            res = validate_dental_sample(obj_f, json_f, min_vertices=min_vertices)
-            if res.is_valid:
-                valid_count += 1
-                if res.warning_message:
-                    warnings_list.append({"sample": obj_f, "warning": res.warning_message})
+            sonuc = validate_dental_sample(obj_dosya, json_dosya, min_kose=min_kose)
+            if sonuc.gecerli_mi:
+                gecerli_sayisi += 1
+                if sonuc.uyari_mesaji:
+                    uyari_listesi.append({"sample": obj_dosya, "warning": sonuc.uyari_mesaji})
             else:
-                invalid_samples.append({
-                    "sample": obj_f,
-                    "error": res.error_message
+                gecersiz_ornekler.append({
+                    "sample": obj_dosya,
+                    "error": sonuc.hata_mesaji
                 })
 
-    report = {
-        "total_scanned": total_scanned,
-        "valid_count": valid_count,
-        "invalid_count": len(invalid_samples),
-        "warning_count": len(warnings_list),
-        "valid_ratio_percent": (valid_count / total_scanned * 100) if total_scanned > 0 else 0.0,
-        "invalid_samples": invalid_samples,
-        "warnings": warnings_list
+    rapor = {
+        "total_scanned": toplam_taranan,
+        "valid_count": gecerli_sayisi,
+        "invalid_count": len(gecersiz_ornekler),
+        "warning_count": len(uyari_listesi),
+        "valid_ratio_percent": (gecerli_sayisi / toplam_taranan * 100) if toplam_taranan > 0 else 0.0,
+        "invalid_samples": gecersiz_ornekler,
+        "warnings": uyari_listesi
     }
 
-    logger.info(
-        f"Dogrulama Tamamlandi -> Taranan: {total_scanned} | "
-        f"Gecerli: {valid_count} (%{report['valid_ratio_percent']:.1f}) | "
-        f"Gecersiz: {len(invalid_samples)}"
+    kayitci.info(
+        f"Dogrulama Tamamlandi -> Taranan: {toplam_taranan} | "
+        f"Gecerli: {gecerli_sayisi} (%{rapor['valid_ratio_percent']:.1f}) | "
+        f"Gecersiz: {len(gecersiz_ornekler)}"
     )
-    return report
+    return rapor
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Teeth3DS Veri Seti Dogrulama Araci")
-    parser.add_argument("--data-root", type=str, default="data/3DTeethData", help="Veri seti ana dizini")
-    parser.add_argument("--parts", nargs="+", default=["data_part_1"], help="Taranacak parcalar")
-    parser.add_argument("--min-vertices", type=int, default=100, help="Minimum kabul edilen kose sayisi")
-    parser.add_argument("--max-samples", type=int, default=None, help="Maksimum taranacak ornek sayisi")
+    ayristirici = argparse.ArgumentParser(description="Teeth3DS Veri Seti Dogrulama Araci")
+    ayristirici.add_argument("--data-root", type=str, default="data/3DTeethData", help="Veri seti ana dizini")
+    ayristirici.add_argument("--parts", nargs="+", default=["data_part_1"], help="Taranacak parcalar")
+    ayristirici.add_argument("--min-vertices", type=int, default=100, help="Minimum kabul edilen kose sayisi")
+    ayristirici.add_argument("--max-samples", type=int, default=None, help="Maksimum taranacak ornek sayisi")
 
-    args = parser.parse_args()
-    report = scan_dataset(
-        data_root=args.data_root,
-        parts=args.parts,
-        min_vertices=args.min_vertices,
-        max_samples=args.max_samples
+    argumanlar = ayristirici.parse_args()
+    sonuc_raporu = scan_dataset(
+        veri_koku=argumanlar.data_root,
+        parcalar=argumanlar.parts,
+        min_kose=argumanlar.min_vertices,
+        maks_ornek=argumanlar.max_samples
     )
 
     print("\n--- Veri Seti Dogrulama Raporu ---")
-    print(f"Toplam Taranan  : {report['total_scanned']}")
-    print(f"Gecerli Vaka    : {report['valid_count']} (%{report['valid_ratio_percent']:.1f})")
-    print(f"Gecersiz Vaka   : {report['invalid_count']}")
-    print(f"Uyari Sayisi    : {report['warning_count']}")
+    print(f"Toplam Taranan  : {sonuc_raporu['total_scanned']}")
+    print(f"Gecerli Vaka    : {sonuc_raporu['valid_count']} (%{sonuc_raporu['valid_ratio_percent']:.1f})")
+    print(f"Gecersiz Vaka   : {sonuc_raporu['invalid_count']}")
+    print(f"Uyari Sayisi    : {sonuc_raporu['warning_count']}")
 
-    if report["invalid_samples"]:
+    if sonuc_raporu["invalid_samples"]:
         print("\nIlk 5 Hata Ornegi:")
-        for err in report["invalid_samples"][:5]:
-            print(f" - {err['sample']}: {err['error']}")
+        for hata_ornek in sonuc_raporu["invalid_samples"][:5]:
+            print(f" - {hata_ornek['sample']}: {hata_ornek['error']}")

@@ -23,6 +23,7 @@ data/four/*
 *.stl
 *.pth
 *.pt
+*.zip
 
 # IDE / Editör
 .vscode/

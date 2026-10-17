@@ -1,5 +1,5 @@
 """
-Kamera Kalibrasyonu Modülü.
+Kamera Kalibrasyonu Modulu.
 """
 from calibration.calib_script import CameraCalibrator
 

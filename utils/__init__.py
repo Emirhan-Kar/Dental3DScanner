@@ -1,5 +1,5 @@
 """
-Yardımcı Araçlar ve Altyapı Modülleri (Logging, Konfigürasyon, Veri Doğrulama).
+Yardimci Araclar ve Altyapi Modulleri (Logging, Konfigurasyon, Veri Dogrulama).
 """
 from utils.logger import setup_logger, get_logger
 from utils.config import load_config, save_config, get_base_parser, ConfigNode
@@ -11,9 +11,9 @@ from utils.validator import (
     validate_point_cloud,
     validate_image_file,
     scan_dataset,
-    VALID_FDI_CLASSES
+    VALID_FDI_CLASSES,
+    GECERLI_FDI_SINIFLARI
 )
-from utils.video_stream import ThreadedVideoStream
 
 __all__ = [
     "setup_logger",
@@ -30,5 +30,5 @@ __all__ = [
     "validate_image_file",
     "scan_dataset",
     "VALID_FDI_CLASSES",
-    "ThreadedVideoStream"
+    "GECERLI_FDI_SINIFLARI"
 ]
