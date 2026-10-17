@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  # 1. Ana Pipeline / Simülasyon Servisi
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: dental-scanner:latest
+    container_name: dental_scanner_app
+    volumes:
+      - ./data:/app/data
+      - ./output:/app/output
+      - ./configs:/app/configs
+      - ./logs:/app/logs
+    command: python main.py --simulation --output output/scan_result.ply --export-mesh output/dental_model.stl
+
+  # 2. Test Servisi (86 Adet Birim ve Entegrasyon Testi)
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: dental-scanner:latest
+    container_name: dental_scanner_tests
+    volumes:
+      - ./output:/app/output
+      - ./logs:/app/logs
+    command: python -m pytest tests/ -v
+
+  # 3. AI Model Eğitimi Servisi
+  ai-train:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: dental-scanner:latest
+    container_name: dental_scanner_train
+    volumes:
+      - ./data:/app/data
+      - ./ai_model:/app/ai_model
+      - ./configs:/app/configs
+      - ./logs:/app/logs
+    command: python ai_model/train.py --epochs 100 --batch-size 4
+
+  # 4. 3D Diş Segmentasyonu Çıkarım Servisi (Headless)
+  ai-infer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: dental-scanner:latest
+    container_name: dental_scanner_infer
+    volumes:
+      - ./data:/app/data
+      - ./output:/app/output
+      - ./ai_model:/app/ai_model
+    command: python ai_model/inference.py --mesh data/3DTeethData/data_part_1/sample/model.obj --no-gui --output-ply output/segmented.ply

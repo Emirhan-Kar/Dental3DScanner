@@ -12,6 +12,7 @@ Sistem, fiziksel cihaz bağımlılığını en aza indirip ağır iş yükünü 
 - [3D Derin Öğrenme Modülü](#-3d-derin-öğrenme-modülü-tooth-segmentation)
 - [Dizin Mimarisi](#-dizin-mimarisi)
 - [Kurulum ve Çalıştırma](#-kurulum-ve-çalıştırma)
+- [Docker ile Çalıştırma](#5--docker-ile-kurulum-ve-çalıştırma)
 - [Veri Seti ve Test Verileri](#-veri-seti-ve-test-verilerinin-temini)
 
 ---
@@ -142,6 +143,9 @@ intraoral-3d-engine/
 │
 ├── main.py                    # Pipeline ana çalıştırma betiği (orkestratör)
 ├── requirements.txt           # Bağımlılıklar
+├── Dockerfile                 # Konteyner imaj tanımı (OpenCV, Open3D, PyTorch)
+├── docker-compose.yml         # Çoklu servis orkestrasyonu (app, test, ai-train, ai-infer)
+├── .dockerignore              # Docker derleme bağlamı filtre kuralları
 ├── pytest.ini                 # Test konfigürasyonu
 ├── LICENSE                    # MIT Lisansı
 └── README.md                  # Teknik dokümantasyon
@@ -179,6 +183,39 @@ PyTorch CUDA desteği için [PyTorch resmi sitesinden](https://pytorch.org/get-s
 ```bash
 # Örnek: CUDA 12.x
 pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+```
+
+### 5. 🐳 Docker ile Kurulum ve Çalıştırma
+
+Projeyi sisteminize hiçbir kütüphane kurmadan Docker ve Docker Compose ile izole bir ortamda çalıştırabilirsiniz.
+
+#### A. Docker İmajını Oluşturma
+```bash
+docker build -t dental-scanner:latest .
+```
+
+#### B. Docker Compose ile Hızlı Başlatma
+```bash
+# 1. Simülasyonu çalıştırıp çıktı üretme (.stl ve .ply)
+docker compose up app
+
+# 2. Tüm birim ve entegrasyon testlerini çalıştırma (86 test)
+docker compose run --rm test
+
+# 3. AI model eğitimini başlatma
+docker compose up ai-train
+
+# 4. 3D diş segmentasyonu çıkarımı yapma
+docker compose run --rm ai-infer
+```
+
+#### C. Doğrudan `docker run` ile Çalıştırma
+```bash
+# Simülasyon çalıştırma ve çıktıları yerel output klasörüne alma:
+docker run --rm -v "%cd%\output:/app/output" dental-scanner:latest
+
+# Konteyner içinde testleri koşturma:
+docker run --rm dental-scanner:latest pytest tests/ -v
 ```
 
 ---
