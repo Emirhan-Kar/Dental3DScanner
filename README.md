@@ -288,7 +288,7 @@ python -m pytest tests/ --tb=short -q
 Büyük boyutlu 3D diş tarama modelleri ve test verileri (`~16.25 GB`) dosya boyutu sınırları nedeniyle Git deposuna dahil edilmemiştir ve bulut depolama üzerinden paylaşılmaktadır.
 
 1. **Veri Setini İndirin:**
-   * 🔗 **Google Drive İndirme Bağlantısı:** [Dental_3DTeeth_Dataset.zip İndir (Google Drive)](https://drive.google.com/drive/folders/16Hu5X4xl0T8laWr-EeORfRhz_pGa7D0E)
+   * 🔗 **Google Drive İndirme Bağlantısı:** [Dental_3DTeeth_Dataset.zip İndir (Google Drive)](https://drive.google.com/file/d/1lU2RUMmP984PJrWWGSY4w8_HX1v1zkAD/view?usp=drive_link)
    * **Arşiv Adı:** `Dental_3DTeeth_Dataset.zip` (~16.25 GB)
 
 2. **Arşivi Çıkarın:**
