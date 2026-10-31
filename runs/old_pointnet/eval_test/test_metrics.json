@@ -1,0 +1,1662 @@
+{
+  "num_cases": 207,
+  "num_patients": 90,
+  "accuracy": 0.45934076180054334,
+  "mIoU_all": 0.01391941702425889,
+  "mIoU_teeth": 0.0,
+  "dice": 0.019076308136675397,
+  "case_mIoU_teeth_mean": 0.0,
+  "case_mIoU_teeth_std": 0.0,
+  "tooth_identification_rate_iou50": 0.0,
+  "per_class": [
+    {
+      "fdi": 0,
+      "name": "gingiva",
+      "iou": 0.45934076180054334,
+      "vertices": 11143775
+    },
+    {
+      "fdi": 11,
+      "name": "tooth_11",
+      "iou": 0.0,
+      "vertices": 524576
+    },
+    {
+      "fdi": 12,
+      "name": "tooth_12",
+      "iou": 0.0,
+      "vertices": 371173
+    },
+    {
+      "fdi": 13,
+      "name": "tooth_13",
+      "iou": 0.0,
+      "vertices": 362378
+    },
+    {
+      "fdi": 14,
+      "name": "tooth_14",
+      "iou": 0.0,
+      "vertices": 467842
+    },
+    {
+      "fdi": 15,
+      "name": "tooth_15",
+      "iou": 0.0,
+      "vertices": 490081
+    },
+    {
+      "fdi": 16,
+      "name": "tooth_16",
+      "iou": 0.0,
+      "vertices": 782168
+    },
+    {
+      "fdi": 17,
+      "name": "tooth_17",
+      "iou": 0.0,
+      "vertices": 403799
+    },
+    {
+      "fdi": 18,
+      "name": "tooth_18",
+      "iou": 0.0,
+      "vertices": 28994
+    },
+    {
+      "fdi": 21,
+      "name": "tooth_21",
+      "iou": 0.0,
+      "vertices": 531514
+    },
+    {
+      "fdi": 22,
+      "name": "tooth_22",
+      "iou": 0.0,
+      "vertices": 372926
+    },
+    {
+      "fdi": 23,
+      "name": "tooth_23",
+      "iou": 0.0,
+      "vertices": 373080
+    },
+    {
+      "fdi": 24,
+      "name": "tooth_24",
+      "iou": 0.0,
+      "vertices": 464752
+    },
+    {
+      "fdi": 25,
+      "name": "tooth_25",
+      "iou": 0.0,
+      "vertices": 479624
+    },
+    {
+      "fdi": 26,
+      "name": "tooth_26",
+      "iou": 0.0,
+      "vertices": 787103
+    },
+    {
+      "fdi": 27,
+      "name": "tooth_27",
+      "iou": 0.0,
+      "vertices": 450863
+    },
+    {
+      "fdi": 28,
+      "name": "tooth_28",
+      "iou": 0.0,
+      "vertices": 20816
+    },
+    {
+      "fdi": 31,
+      "name": "tooth_31",
+      "iou": 0.0,
+      "vertices": 299787
+    },
+    {
+      "fdi": 32,
+      "name": "tooth_32",
+      "iou": 0.0,
+      "vertices": 322044
+    },
+    {
+      "fdi": 33,
+      "name": "tooth_33",
+      "iou": 0.0,
+      "vertices": 365557
+    },
+    {
+      "fdi": 34,
+      "name": "tooth_34",
+      "iou": 0.0,
+      "vertices": 398223
+    },
+    {
+      "fdi": 35,
+      "name": "tooth_35",
+      "iou": 0.0,
+      "vertices": 458432
+    },
+    {
+      "fdi": 36,
+      "name": "tooth_36",
+      "iou": 0.0,
+      "vertices": 743036
+    },
+    {
+      "fdi": 37,
+      "name": "tooth_37",
+      "iou": 0.0,
+      "vertices": 485948
+    },
+    {
+      "fdi": 38,
+      "name": "tooth_38",
+      "iou": 0.0,
+      "vertices": 39759
+    },
+    {
+      "fdi": 41,
+      "name": "tooth_41",
+      "iou": 0.0,
+      "vertices": 302850
+    },
+    {
+      "fdi": 42,
+      "name": "tooth_42",
+      "iou": 0.0,
+      "vertices": 321049
+    },
+    {
+      "fdi": 43,
+      "name": "tooth_43",
+      "iou": 0.0,
+      "vertices": 363116
+    },
+    {
+      "fdi": 44,
+      "name": "tooth_44",
+      "iou": 0.0,
+      "vertices": 399413
+    },
+    {
+      "fdi": 45,
+      "name": "tooth_45",
+      "iou": 0.0,
+      "vertices": 434422
+    },
+    {
+      "fdi": 46,
+      "name": "tooth_46",
+      "iou": 0.0,
+      "vertices": 730067
+    },
+    {
+      "fdi": 47,
+      "name": "tooth_47",
+      "iou": 0.0,
+      "vertices": 469318
+    },
+    {
+      "fdi": 48,
+      "name": "tooth_48",
+      "iou": 0.0,
+      "vertices": 71881
+    }
+  ],
+  "cases": [
+    {
+      "obj": "data/3DTeethData/data_part_1/lower/OEPN5LUR/OEPN5LUR_lower.obj",
+      "patient": "OEPN5LUR",
+      "accuracy": 0.48577225288423515,
+      "mIoU": 0.02857483840495501,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_1/lower/Q21I52KT/Q21I52KT_lower.obj",
+      "patient": "Q21I52KT",
+      "accuracy": 0.3890022362594774,
+      "mIoU": 0.02593348241729849,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_1/lower/QTDZUUZV/QTDZUUZV_lower.obj",
+      "patient": "QTDZUUZV",
+      "accuracy": 0.34180122284114145,
+      "mIoU": 0.02278674818940943,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_1/lower/S5VIQ478/S5VIQ478_lower.obj",
+      "patient": "S5VIQ478",
+      "accuracy": 0.3342511403653896,
+      "mIoU": 0.025711626181953048,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_1/lower/VBUD4E5R/VBUD4E5R_lower.obj",
+      "patient": "VBUD4E5R",
+      "accuracy": 0.5247881034445384,
+      "mIoU": 0.03498587356296923,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_1/lower/VEAVRKX3/VEAVRKX3_lower.obj",
+      "patient": "VEAVRKX3",
+      "accuracy": 0.4018027714247276,
+      "mIoU": 0.026786851428315172,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_1/lower/VR3C4L0M/VR3C4L0M_lower.obj",
+      "patient": "VR3C4L0M",
+      "accuracy": 0.5311673830548711,
+      "mIoU": 0.03541115887032474,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_1/lower/W06EM826/W06EM826_lower.obj",
+      "patient": "W06EM826",
+      "accuracy": 0.30067404910929224,
+      "mIoU": 0.020044936607286148,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_1/lower/XA2VLAUJ/XA2VLAUJ_lower.obj",
+      "patient": "XA2VLAUJ",
+      "accuracy": 0.3538822134052497,
+      "mIoU": 0.022117638337828108,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_1/lower/XCBAJJUV/XCBAJJUV_lower.obj",
+      "patient": "XCBAJJUV",
+      "accuracy": 0.4279151589175197,
+      "mIoU": 0.025171479936324688,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_1/lower/Y9WQHQMT/Y9WQHQMT_lower.obj",
+      "patient": "Y9WQHQMT",
+      "accuracy": 0.3083219645293315,
+      "mIoU": 0.02055479763528877,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_1/lower/YCJO4386/YCJO4386_lower.obj",
+      "patient": "YCJO4386",
+      "accuracy": 0.43806027172596307,
+      "mIoU": 0.029204018115064203,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_1/lower/Z27UU3OM/Z27UU3OM_lower.obj",
+      "patient": "Z27UU3OM",
+      "accuracy": 0.4761535525122871,
+      "mIoU": 0.03174357016748581,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_1/upper/ASUXPX7O/ASUXPX7O_upper.obj",
+      "patient": "ASUXPX7O",
+      "accuracy": 0.5089399978061355,
+      "mIoU": 0.0339293331870757,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_1/upper/C2SF98X5/C2SF98X5_upper.obj",
+      "patient": "C2SF98X5",
+      "accuracy": 0.48187329039784954,
+      "mIoU": 0.0321248860265233,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_1/upper/CBSF6Q84/CBSF6Q84_upper.obj",
+      "patient": "CBSF6Q84",
+      "accuracy": 0.4936489158686435,
+      "mIoU": 0.04113740965572029,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_1/upper/CVXIS1C2/CVXIS1C2_upper.obj",
+      "patient": "CVXIS1C2",
+      "accuracy": 0.39152121617363367,
+      "mIoU": 0.02610141441157558,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_1/upper/EA8SBGX4/EA8SBGX4_upper.obj",
+      "patient": "EA8SBGX4",
+      "accuracy": 0.5064964910109777,
+      "mIoU": 0.03376643273406518,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_1/upper/EK26QFUW/EK26QFUW_upper.obj",
+      "patient": "EK26QFUW",
+      "accuracy": 0.48024823361123553,
+      "mIoU": 0.032016548907415704,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_1/upper/FGXB4D4K/FGXB4D4K_upper.obj",
+      "patient": "FGXB4D4K",
+      "accuracy": 0.5312405937084033,
+      "mIoU": 0.04086466105449256,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_1/upper/FKSYZ9LA/FKSYZ9LA_upper.obj",
+      "patient": "FKSYZ9LA",
+      "accuracy": 0.6134580021817049,
+      "mIoU": 0.04718907709090037,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_1/upper/GNR6QR3P/GNR6QR3P_upper.obj",
+      "patient": "GNR6QR3P",
+      "accuracy": 0.4978028503562945,
+      "mIoU": 0.03318685669041963,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_1/upper/I04GI3H5/I04GI3H5_upper.obj",
+      "patient": "I04GI3H5",
+      "accuracy": 0.5746362883314702,
+      "mIoU": 0.04420279141011309,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_1/upper/I13W39XQ/I13W39XQ_upper.obj",
+      "patient": "I13W39XQ",
+      "accuracy": 0.4709846796289281,
+      "mIoU": 0.036229590740686775,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_1/upper/I9TWNSD1/I9TWNSD1_upper.obj",
+      "patient": "I9TWNSD1",
+      "accuracy": 0.44056748466257667,
+      "mIoU": 0.02937116564417178,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_1/upper/JJ19KE8W/JJ19KE8W_upper.obj",
+      "patient": "JJ19KE8W",
+      "accuracy": 0.5159701299421452,
+      "mIoU": 0.03969000999554963,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_1/upper/KBN31K7D/KBN31K7D_upper.obj",
+      "patient": "KBN31K7D",
+      "accuracy": 0.6078022384608269,
+      "mIoU": 0.040520149230721794,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_2/lower/BEONHKS1/BEONHKS1_lower.obj",
+      "patient": "BEONHKS1",
+      "accuracy": 0.4624774999042549,
+      "mIoU": 0.030831833326950327,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_2/lower/C2SF98X5/C2SF98X5_lower.obj",
+      "patient": "C2SF98X5",
+      "accuracy": 0.42630495467822077,
+      "mIoU": 0.028420330311881386,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_2/lower/CD81F1F4/CD81F1F4_lower.obj",
+      "patient": "CD81F1F4",
+      "accuracy": 0.384928716904277,
+      "mIoU": 0.025661914460285134,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_2/lower/DKDRMRFK/DKDRMRFK_lower.obj",
+      "patient": "DKDRMRFK",
+      "accuracy": 0.4440689240805116,
+      "mIoU": 0.02960459493870077,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_2/lower/EA8SBGX4/EA8SBGX4_lower.obj",
+      "patient": "EA8SBGX4",
+      "accuracy": 0.3348991565474549,
+      "mIoU": 0.02232661043649699,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_2/lower/EI585456/EI585456_lower.obj",
+      "patient": "EI585456",
+      "accuracy": 0.4066223197349674,
+      "mIoU": 0.027108154648997827,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_2/lower/ERCT8ZLW/ERCT8ZLW_lower.obj",
+      "patient": "ERCT8ZLW",
+      "accuracy": 0.4460022404256809,
+      "mIoU": 0.02973348269504539,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_2/lower/FKSYZ9LA/FKSYZ9LA_lower.obj",
+      "patient": "FKSYZ9LA",
+      "accuracy": 0.4533980277949158,
+      "mIoU": 0.034876771368839675,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_2/lower/GK7OJEPT/GK7OJEPT_lower.obj",
+      "patient": "GK7OJEPT",
+      "accuracy": 0.4294257872945506,
+      "mIoU": 0.02862838581963671,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_2/lower/I04GI3H5/I04GI3H5_lower.obj",
+      "patient": "I04GI3H5",
+      "accuracy": 0.4950601324992498,
+      "mIoU": 0.03300400883328332,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_2/lower/I13W39XQ/I13W39XQ_lower.obj",
+      "patient": "I13W39XQ",
+      "accuracy": 0.5023962485345839,
+      "mIoU": 0.03864586527189107,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_2/lower/I9TWNSD1/I9TWNSD1_lower.obj",
+      "patient": "I9TWNSD1",
+      "accuracy": 0.4338822265974584,
+      "mIoU": 0.028925481773163893,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_2/lower/JJ19KE8W/JJ19KE8W_lower.obj",
+      "patient": "JJ19KE8W",
+      "accuracy": 0.4529887560085408,
+      "mIoU": 0.030199250400569387,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_2/lower/KBN31K7D/KBN31K7D_lower.obj",
+      "patient": "KBN31K7D",
+      "accuracy": 0.5877875227535992,
+      "mIoU": 0.03918583485023995,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_2/lower/KS0FGXGB/KS0FGXGB_lower.obj",
+      "patient": "KS0FGXGB",
+      "accuracy": 0.5005497948614872,
+      "mIoU": 0.03336998632409915,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_2/lower/MGYSCSI9/MGYSCSI9_lower.obj",
+      "patient": "MGYSCSI9",
+      "accuracy": 0.45629058642740294,
+      "mIoU": 0.03509927587903099,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_2/lower/NFC5OJPM/NFC5OJPM_lower.obj",
+      "patient": "NFC5OJPM",
+      "accuracy": 0.33434949705826533,
+      "mIoU": 0.022289966470551023,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_2/lower/NZ9C9J2G/NZ9C9J2G_lower.obj",
+      "patient": "NZ9C9J2G",
+      "accuracy": 0.3820907733140536,
+      "mIoU": 0.025472718220936906,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_2/lower/O2LXM8BS/O2LXM8BS_lower.obj",
+      "patient": "O2LXM8BS",
+      "accuracy": 0.44770001518141794,
+      "mIoU": 0.03443846270626292,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_2/upper/MGYSCSI9/MGYSCSI9_upper.obj",
+      "patient": "MGYSCSI9",
+      "accuracy": 0.45557096433672095,
+      "mIoU": 0.02847318527104506,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_2/upper/MHG8FM6A/MHG8FM6A_upper.obj",
+      "patient": "MHG8FM6A",
+      "accuracy": 0.6881191916211831,
+      "mIoU": 0.04915137083008451,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_2/upper/OE8BA9EK/OE8BA9EK_upper.obj",
+      "patient": "OE8BA9EK",
+      "accuracy": 0.46241752555090776,
+      "mIoU": 0.030827835036727185,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_2/upper/OEPN5LUR/OEPN5LUR_upper.obj",
+      "patient": "OEPN5LUR",
+      "accuracy": 0.5360611563470212,
+      "mIoU": 0.0315330091968836,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_2/upper/S5VIQ478/S5VIQ478_upper.obj",
+      "patient": "S5VIQ478",
+      "accuracy": 0.4655373204595575,
+      "mIoU": 0.031035821363970498,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_2/upper/U7UBW70K/U7UBW70K_upper.obj",
+      "patient": "U7UBW70K",
+      "accuracy": 0.4517012356387819,
+      "mIoU": 0.030113415709252127,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_2/upper/VBUD4E5R/VBUD4E5R_upper.obj",
+      "patient": "VBUD4E5R",
+      "accuracy": 0.4831463100387962,
+      "mIoU": 0.03220975400258642,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_2/upper/VEAVRKX3/VEAVRKX3_upper.obj",
+      "patient": "VEAVRKX3",
+      "accuracy": 0.5217533529604187,
+      "mIoU": 0.03478355686402791,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_2/upper/VR3C4L0M/VR3C4L0M_upper.obj",
+      "patient": "VR3C4L0M",
+      "accuracy": 0.5523768755260179,
+      "mIoU": 0.03682512503506786,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_2/upper/W06EM826/W06EM826_upper.obj",
+      "patient": "W06EM826",
+      "accuracy": 0.46665421040953836,
+      "mIoU": 0.031110280693969223,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_2/upper/XCBAJJUV/XCBAJJUV_upper.obj",
+      "patient": "XCBAJJUV",
+      "accuracy": 0.5210966362045498,
+      "mIoU": 0.034739775746969986,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_2/upper/YTMRIXFD/YTMRIXFD_upper.obj",
+      "patient": "YTMRIXFD",
+      "accuracy": 0.47681197250500307,
+      "mIoU": 0.034057998036071645,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_2/upper/Z27UU3OM/Z27UU3OM_upper.obj",
+      "patient": "Z27UU3OM",
+      "accuracy": 0.6186902713572006,
+      "mIoU": 0.06186902713572005,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/lower/01A91JH6/01A91JH6_lower.obj",
+      "patient": "01A91JH6",
+      "accuracy": 0.3245188617049139,
+      "mIoU": 0.021634590780327593,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/lower/01EDMPPZ/01EDMPPZ_lower.obj",
+      "patient": "01EDMPPZ",
+      "accuracy": 0.371573321456408,
+      "mIoU": 0.02858256318895446,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/lower/01FPTYH2/01FPTYH2_lower.obj",
+      "patient": "01FPTYH2",
+      "accuracy": 0.39030041189111747,
+      "mIoU": 0.03252503432425979,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/lower/01HY2W2Z/01HY2W2Z_lower.obj",
+      "patient": "01HY2W2Z",
+      "accuracy": 0.396937110503863,
+      "mIoU": 0.026462474033590866,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/lower/01J9K9S6/01J9K9S6_lower.obj",
+      "patient": "01J9K9S6",
+      "accuracy": 0.296692535559527,
+      "mIoU": 0.017452502091736884,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/lower/01JHAGK0/01JHAGK0_lower.obj",
+      "patient": "01JHAGK0",
+      "accuracy": 0.46056524844403635,
+      "mIoU": 0.03542809603415664,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/lower/01K5X8CN/01K5X8CN_lower.obj",
+      "patient": "01K5X8CN",
+      "accuracy": 0.39296587718951403,
+      "mIoU": 0.03022814439919339,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/lower/01KEV6ET/01KEV6ET_lower.obj",
+      "patient": "01KEV6ET",
+      "accuracy": 0.32559923298178334,
+      "mIoU": 0.02170661553211889,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/lower/01KKD7YK/01KKD7YK_lower.obj",
+      "patient": "01KKD7YK",
+      "accuracy": 0.3093065126963432,
+      "mIoU": 0.023792808668949474,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/lower/01M24NSZ/01M24NSZ_lower.obj",
+      "patient": "01M24NSZ",
+      "accuracy": 0.2573478855318375,
+      "mIoU": 0.0171565257021225,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/lower/4OWAG3SG/4OWAG3SG_lower.obj",
+      "patient": "4OWAG3SG",
+      "accuracy": 0.4387469879518072,
+      "mIoU": 0.025808646350106306,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/lower/5LP835GA/5LP835GA_lower.obj",
+      "patient": "5LP835GA",
+      "accuracy": 0.4661649393512582,
+      "mIoU": 0.031077662623417213,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/lower/6FUR0HKF/6FUR0HKF_lower.obj",
+      "patient": "6FUR0HKF",
+      "accuracy": 0.46921623691600717,
+      "mIoU": 0.031281082461067145,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/lower/6QJ5RART/6QJ5RART_lower.obj",
+      "patient": "6QJ5RART",
+      "accuracy": 0.35729128186183967,
+      "mIoU": 0.02381941879078931,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/lower/OEPN5LUR/OEPN5LUR_lower.obj",
+      "patient": "OEPN5LUR",
+      "accuracy": 0.48577225288423515,
+      "mIoU": 0.02857483840495501,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/lower/Q21I52KT/Q21I52KT_lower.obj",
+      "patient": "Q21I52KT",
+      "accuracy": 0.3890022362594774,
+      "mIoU": 0.02593348241729849,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/lower/QTDZUUZV/QTDZUUZV_lower.obj",
+      "patient": "QTDZUUZV",
+      "accuracy": 0.34180122284114145,
+      "mIoU": 0.02278674818940943,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/lower/S5VIQ478/S5VIQ478_lower.obj",
+      "patient": "S5VIQ478",
+      "accuracy": 0.3342511403653896,
+      "mIoU": 0.025711626181953048,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/lower/VBUD4E5R/VBUD4E5R_lower.obj",
+      "patient": "VBUD4E5R",
+      "accuracy": 0.5247881034445384,
+      "mIoU": 0.03498587356296923,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/lower/VEAVRKX3/VEAVRKX3_lower.obj",
+      "patient": "VEAVRKX3",
+      "accuracy": 0.4018027714247276,
+      "mIoU": 0.026786851428315172,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/lower/VR3C4L0M/VR3C4L0M_lower.obj",
+      "patient": "VR3C4L0M",
+      "accuracy": 0.5311673830548711,
+      "mIoU": 0.03541115887032474,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/lower/W06EM826/W06EM826_lower.obj",
+      "patient": "W06EM826",
+      "accuracy": 0.30067404910929224,
+      "mIoU": 0.020044936607286148,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/lower/XA2VLAUJ/XA2VLAUJ_lower.obj",
+      "patient": "XA2VLAUJ",
+      "accuracy": 0.3538822134052497,
+      "mIoU": 0.022117638337828108,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/lower/XCBAJJUV/XCBAJJUV_lower.obj",
+      "patient": "XCBAJJUV",
+      "accuracy": 0.4279151589175197,
+      "mIoU": 0.025171479936324688,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/lower/Y9WQHQMT/Y9WQHQMT_lower.obj",
+      "patient": "Y9WQHQMT",
+      "accuracy": 0.3083219645293315,
+      "mIoU": 0.02055479763528877,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/lower/YCJO4386/YCJO4386_lower.obj",
+      "patient": "YCJO4386",
+      "accuracy": 0.43806027172596307,
+      "mIoU": 0.029204018115064203,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/lower/Z27UU3OM/Z27UU3OM_lower.obj",
+      "patient": "Z27UU3OM",
+      "accuracy": 0.4761535525122871,
+      "mIoU": 0.03174357016748581,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/upper/0140VD2R/0140VD2R_upper.obj",
+      "patient": "0140VD2R",
+      "accuracy": 0.46447884926843996,
+      "mIoU": 0.030965256617896,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/upper/0148VUFR/0148VUFR_upper.obj",
+      "patient": "0148VUFR",
+      "accuracy": 0.4109066668578105,
+      "mIoU": 0.027393777790520702,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/upper/014EZU5V/014EZU5V_upper.obj",
+      "patient": "014EZU5V",
+      "accuracy": 0.5614063656550703,
+      "mIoU": 0.037427091043671354,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/upper/014S002X/014S002X_upper.obj",
+      "patient": "014S002X",
+      "accuracy": 0.4440969700970361,
+      "mIoU": 0.03172121214978829,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/upper/014Z1E5D/014Z1E5D_upper.obj",
+      "patient": "014Z1E5D",
+      "accuracy": 0.4632684017722779,
+      "mIoU": 0.03088456011815186,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/upper/016FSM14/016FSM14_upper.obj",
+      "patient": "016FSM14",
+      "accuracy": 0.5377338163405471,
+      "mIoU": 0.04136413971850362,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/upper/202Z1L1N/202Z1L1N_upper.obj",
+      "patient": "202Z1L1N",
+      "accuracy": 0.48342658597458527,
+      "mIoU": 0.03718666045958348,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/upper/230CAJXL/230CAJXL_upper.obj",
+      "patient": "230CAJXL",
+      "accuracy": 0.39776644772653047,
+      "mIoU": 0.026517763181768697,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/upper/35XFO1ZF/35XFO1ZF_upper.obj",
+      "patient": "35XFO1ZF",
+      "accuracy": 0.4427659018638128,
+      "mIoU": 0.029517726790920854,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/upper/55EXF0WK/55EXF0WK_upper.obj",
+      "patient": "55EXF0WK",
+      "accuracy": 0.5363152496326893,
+      "mIoU": 0.03830823211662066,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/upper/9YQIGSGN/9YQIGSGN_upper.obj",
+      "patient": "9YQIGSGN",
+      "accuracy": 0.570070869689894,
+      "mIoU": 0.043851605360761076,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/upper/ASUXPX7O/ASUXPX7O_upper.obj",
+      "patient": "ASUXPX7O",
+      "accuracy": 0.5089399978061355,
+      "mIoU": 0.0339293331870757,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/upper/C2SF98X5/C2SF98X5_upper.obj",
+      "patient": "C2SF98X5",
+      "accuracy": 0.48187329039784954,
+      "mIoU": 0.0321248860265233,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/upper/CBSF6Q84/CBSF6Q84_upper.obj",
+      "patient": "CBSF6Q84",
+      "accuracy": 0.4936489158686435,
+      "mIoU": 0.04113740965572029,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/upper/CVXIS1C2/CVXIS1C2_upper.obj",
+      "patient": "CVXIS1C2",
+      "accuracy": 0.39152121617363367,
+      "mIoU": 0.02610141441157558,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/upper/EA8SBGX4/EA8SBGX4_upper.obj",
+      "patient": "EA8SBGX4",
+      "accuracy": 0.5064964910109777,
+      "mIoU": 0.03376643273406518,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/upper/EK26QFUW/EK26QFUW_upper.obj",
+      "patient": "EK26QFUW",
+      "accuracy": 0.48024823361123553,
+      "mIoU": 0.032016548907415704,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/upper/FGXB4D4K/FGXB4D4K_upper.obj",
+      "patient": "FGXB4D4K",
+      "accuracy": 0.5312405937084033,
+      "mIoU": 0.04086466105449256,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/upper/FKSYZ9LA/FKSYZ9LA_upper.obj",
+      "patient": "FKSYZ9LA",
+      "accuracy": 0.6134580021817049,
+      "mIoU": 0.04718907709090037,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/upper/GNR6QR3P/GNR6QR3P_upper.obj",
+      "patient": "GNR6QR3P",
+      "accuracy": 0.4978028503562945,
+      "mIoU": 0.03318685669041963,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/upper/I04GI3H5/I04GI3H5_upper.obj",
+      "patient": "I04GI3H5",
+      "accuracy": 0.5746362883314702,
+      "mIoU": 0.04420279141011309,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/upper/I13W39XQ/I13W39XQ_upper.obj",
+      "patient": "I13W39XQ",
+      "accuracy": 0.4709846796289281,
+      "mIoU": 0.036229590740686775,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/upper/I9TWNSD1/I9TWNSD1_upper.obj",
+      "patient": "I9TWNSD1",
+      "accuracy": 0.44056748466257667,
+      "mIoU": 0.02937116564417178,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/upper/JJ19KE8W/JJ19KE8W_upper.obj",
+      "patient": "JJ19KE8W",
+      "accuracy": 0.5159701299421452,
+      "mIoU": 0.03969000999554963,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_3/upper/KBN31K7D/KBN31K7D_upper.obj",
+      "patient": "KBN31K7D",
+      "accuracy": 0.6078022384608269,
+      "mIoU": 0.040520149230721794,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_4/lower/01422MSK/01422MSK_lower.obj",
+      "patient": "01422MSK",
+      "accuracy": 0.3444585940577732,
+      "mIoU": 0.02460418528984094,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_4/lower/0148VUFR/0148VUFR_lower.obj",
+      "patient": "0148VUFR",
+      "accuracy": 0.32192829830904035,
+      "mIoU": 0.02299487845064574,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_4/lower/014Z1E5D/014Z1E5D_lower.obj",
+      "patient": "014Z1E5D",
+      "accuracy": 0.33288544630624933,
+      "mIoU": 0.022192363087083288,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_4/lower/016FSM14/016FSM14_lower.obj",
+      "patient": "016FSM14",
+      "accuracy": 0.2917316156244269,
+      "mIoU": 0.01823322597652668,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_4/lower/016SVMHT/016SVMHT_lower.obj",
+      "patient": "016SVMHT",
+      "accuracy": 0.374567271836771,
+      "mIoU": 0.028812867064367,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_4/lower/017U3R3T/017U3R3T_lower.obj",
+      "patient": "017U3R3T",
+      "accuracy": 0.2789644812116722,
+      "mIoU": 0.02145880624705171,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_4/lower/13AFGBBC/13AFGBBC_lower.obj",
+      "patient": "13AFGBBC",
+      "accuracy": 0.3404806446970787,
+      "mIoU": 0.02619081882285221,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_4/lower/202Z1L1N/202Z1L1N_lower.obj",
+      "patient": "202Z1L1N",
+      "accuracy": 0.4615565196161286,
+      "mIoU": 0.03077043464107524,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_4/lower/230CAJXL/230CAJXL_lower.obj",
+      "patient": "230CAJXL",
+      "accuracy": 0.45520666603897936,
+      "mIoU": 0.0325147618599271,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_4/lower/55EXF0WK/55EXF0WK_lower.obj",
+      "patient": "55EXF0WK",
+      "accuracy": 0.38937217421164083,
+      "mIoU": 0.02595814494744272,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_4/lower/82D9U6D6/82D9U6D6_lower.obj",
+      "patient": "82D9U6D6",
+      "accuracy": 0.4939914956553892,
+      "mIoU": 0.0352851068325278,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_4/lower/9RXZC3H4/9RXZC3H4_lower.obj",
+      "patient": "9RXZC3H4",
+      "accuracy": 0.33402527677737764,
+      "mIoU": 0.02226835178515851,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_4/lower/9YQIGSGN/9YQIGSGN_lower.obj",
+      "patient": "9YQIGSGN",
+      "accuracy": 0.35350909037391703,
+      "mIoU": 0.02356727269159447,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_4/upper/01A91JH6/01A91JH6_upper.obj",
+      "patient": "01A91JH6",
+      "accuracy": 0.49576876981012696,
+      "mIoU": 0.03305125132067513,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_4/upper/01E9V1EX/01E9V1EX_upper.obj",
+      "patient": "01E9V1EX",
+      "accuracy": 0.5255642026004905,
+      "mIoU": 0.040428015584653115,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_4/upper/01EDMPPZ/01EDMPPZ_upper.obj",
+      "patient": "01EDMPPZ",
+      "accuracy": 0.5821462850314322,
+      "mIoU": 0.03880975233542881,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_4/upper/01FPTYH2/01FPTYH2_upper.obj",
+      "patient": "01FPTYH2",
+      "accuracy": 0.4311616751923982,
+      "mIoU": 0.03316628270710755,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_4/upper/01HY2W2Z/01HY2W2Z_upper.obj",
+      "patient": "01HY2W2Z",
+      "accuracy": 0.4316587706884883,
+      "mIoU": 0.028777251379232552,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_4/upper/01J9K9S6/01J9K9S6_upper.obj",
+      "patient": "01J9K9S6",
+      "accuracy": 0.4170477201522488,
+      "mIoU": 0.02606548250951555,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_4/upper/01JHAGK0/01JHAGK0_upper.obj",
+      "patient": "01JHAGK0",
+      "accuracy": 0.5426966017240114,
+      "mIoU": 0.04174589244030857,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_4/upper/01K17AN8/01K17AN8_upper.obj",
+      "patient": "01K17AN8",
+      "accuracy": 0.465549760608444,
+      "mIoU": 0.0310366507072296,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_4/upper/01K5X8CN/01K5X8CN_upper.obj",
+      "patient": "01K5X8CN",
+      "accuracy": 0.4406928036129201,
+      "mIoU": 0.03389944643176308,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_4/upper/01KKD7YK/01KKD7YK_upper.obj",
+      "patient": "01KKD7YK",
+      "accuracy": 0.47066435813222907,
+      "mIoU": 0.03620495062555608,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_4/upper/01M24NSZ/01M24NSZ_upper.obj",
+      "patient": "01M24NSZ",
+      "accuracy": 0.4105073649754501,
+      "mIoU": 0.027367157665030006,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_4/upper/0O4502M7/0O4502M7_upper.obj",
+      "patient": "0O4502M7",
+      "accuracy": 0.541870151507263,
+      "mIoU": 0.03386688446920394,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_4/upper/1RT7WBH4/1RT7WBH4_upper.obj",
+      "patient": "1RT7WBH4",
+      "accuracy": 0.4460786940291843,
+      "mIoU": 0.029738579601945623,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_4/upper/3Y8A14TI/3Y8A14TI_upper.obj",
+      "patient": "3Y8A14TI",
+      "accuracy": 0.45293072824156305,
+      "mIoU": 0.03019538188277087,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_4/upper/4ZIK093I/4ZIK093I_upper.obj",
+      "patient": "4ZIK093I",
+      "accuracy": 0.44109694244892084,
+      "mIoU": 0.027568558903057552,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_4/upper/5LP835GA/5LP835GA_upper.obj",
+      "patient": "5LP835GA",
+      "accuracy": 0.49732023414933413,
+      "mIoU": 0.03315468227662228,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_4/upper/6FUR0HKF/6FUR0HKF_upper.obj",
+      "patient": "6FUR0HKF",
+      "accuracy": 0.45195616052097143,
+      "mIoU": 0.030130410701398096,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_4/upper/6QJ5RART/6QJ5RART_upper.obj",
+      "patient": "6QJ5RART",
+      "accuracy": 0.3733910909170599,
+      "mIoU": 0.02489273939447066,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_5/lower/ASUXPX7O/ASUXPX7O_lower.obj",
+      "patient": "ASUXPX7O",
+      "accuracy": 0.2737274885633216,
+      "mIoU": 0.018248499237554772,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_5/lower/CBSF6Q84/CBSF6Q84_lower.obj",
+      "patient": "CBSF6Q84",
+      "accuracy": 0.3656184920552737,
+      "mIoU": 0.028124499388867207,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_5/lower/CVXIS1C2/CVXIS1C2_lower.obj",
+      "patient": "CVXIS1C2",
+      "accuracy": 0.379880123116799,
+      "mIoU": 0.027134294508342784,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_5/lower/CXAJM3O9/CXAJM3O9_lower.obj",
+      "patient": "CXAJM3O9",
+      "accuracy": 0.445299677401098,
+      "mIoU": 0.0296866451600732,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_5/lower/DG27PDD4/DG27PDD4_lower.obj",
+      "patient": "DG27PDD4",
+      "accuracy": 0.5350775955210687,
+      "mIoU": 0.04115981504008221,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_5/lower/EK26QFUW/EK26QFUW_lower.obj",
+      "patient": "EK26QFUW",
+      "accuracy": 0.5402027673276797,
+      "mIoU": 0.036013517821845316,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_5/lower/FGXB4D4K/FGXB4D4K_lower.obj",
+      "patient": "FGXB4D4K",
+      "accuracy": 0.35227351169051446,
+      "mIoU": 0.023484900779367632,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_5/lower/FWTHWWD3/FWTHWWD3_lower.obj",
+      "patient": "FWTHWWD3",
+      "accuracy": 0.3154330765789187,
+      "mIoU": 0.02426408281376298,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_5/lower/GNR6QR3P/GNR6QR3P_lower.obj",
+      "patient": "GNR6QR3P",
+      "accuracy": 0.355348978583822,
+      "mIoU": 0.025382069898844426,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_5/lower/H9EM9IEE/H9EM9IEE_lower.obj",
+      "patient": "H9EM9IEE",
+      "accuracy": 0.4103546462335834,
+      "mIoU": 0.027356976415572228,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_5/lower/MHG8FM6A/MHG8FM6A_lower.obj",
+      "patient": "MHG8FM6A",
+      "accuracy": 0.4785266175032981,
+      "mIoU": 0.03190177450021987,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_5/lower/O4WFMHT1/O4WFMHT1_lower.obj",
+      "patient": "O4WFMHT1",
+      "accuracy": 0.4948385399644477,
+      "mIoU": 0.032989235997629845,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_5/lower/OE8BA9EK/OE8BA9EK_lower.obj",
+      "patient": "OE8BA9EK",
+      "accuracy": 0.3898169397448898,
+      "mIoU": 0.025987795982992654,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_5/lower/RTPHYQ5V/RTPHYQ5V_lower.obj",
+      "patient": "RTPHYQ5V",
+      "accuracy": 0.33799692510432683,
+      "mIoU": 0.025999763469563602,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_5/lower/U7UBW70K/U7UBW70K_lower.obj",
+      "patient": "U7UBW70K",
+      "accuracy": 0.44147972461046875,
+      "mIoU": 0.03153426604360491,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_5/lower/VB7GYS2O/VB7GYS2O_lower.obj",
+      "patient": "VB7GYS2O",
+      "accuracy": 0.4007808726453067,
+      "mIoU": 0.030829297895792824,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_5/lower/VR3UZPCR/VR3UZPCR_lower.obj",
+      "patient": "VR3UZPCR",
+      "accuracy": 0.4565585879791618,
+      "mIoU": 0.03043723919861079,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_5/lower/YTMRIXFD/YTMRIXFD_lower.obj",
+      "patient": "YTMRIXFD",
+      "accuracy": 0.35048652887701087,
+      "mIoU": 0.023365768591800725,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_5/upper/01422MSK/01422MSK_upper.obj",
+      "patient": "01422MSK",
+      "accuracy": 0.46058067477622217,
+      "mIoU": 0.038381722898018514,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_5/upper/016SVMHT/016SVMHT_upper.obj",
+      "patient": "016SVMHT",
+      "accuracy": 0.5551262295207648,
+      "mIoU": 0.050466020865524076,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_5/upper/017U3R3T/017U3R3T_upper.obj",
+      "patient": "017U3R3T",
+      "accuracy": 0.3799391410876696,
+      "mIoU": 0.02922608777597458,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_5/upper/01A6H4PZ/01A6H4PZ_upper.obj",
+      "patient": "01A6H4PZ",
+      "accuracy": 0.4594599423493818,
+      "mIoU": 0.03281856731067013,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_5/upper/01E7MMEF/01E7MMEF_upper.obj",
+      "patient": "01E7MMEF",
+      "accuracy": 0.4250568604817944,
+      "mIoU": 0.028337124032119628,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_5/upper/01KEV6ET/01KEV6ET_upper.obj",
+      "patient": "01KEV6ET",
+      "accuracy": 0.4632659999615116,
+      "mIoU": 0.030884399997434104,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_5/upper/13AFGBBC/13AFGBBC_upper.obj",
+      "patient": "13AFGBBC",
+      "accuracy": 0.550619775387821,
+      "mIoU": 0.042355367337524694,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_5/upper/4OWAG3SG/4OWAG3SG_upper.obj",
+      "patient": "4OWAG3SG",
+      "accuracy": 0.443252695537254,
+      "mIoU": 0.026073687972779647,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_5/upper/6PTI2HX6/6PTI2HX6_upper.obj",
+      "patient": "6PTI2HX6",
+      "accuracy": 0.49115017334712,
+      "mIoU": 0.032743344889808,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_5/upper/82D9U6D6/82D9U6D6_upper.obj",
+      "patient": "82D9U6D6",
+      "accuracy": 0.5103011576732699,
+      "mIoU": 0.039253935205636144,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_5/upper/9RXZC3H4/9RXZC3H4_upper.obj",
+      "patient": "9RXZC3H4",
+      "accuracy": 0.4984110875011893,
+      "mIoU": 0.03322740583341262,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/lower/0140VD2R/0140VD2R_lower.obj",
+      "patient": "0140VD2R",
+      "accuracy": 0.36841758200350433,
+      "mIoU": 0.024561172133566955,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/lower/014EZU5V/014EZU5V_lower.obj",
+      "patient": "014EZU5V",
+      "accuracy": 0.4115049281717672,
+      "mIoU": 0.027433661878117813,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/lower/014S002X/014S002X_lower.obj",
+      "patient": "014S002X",
+      "accuracy": 0.293818838399037,
+      "mIoU": 0.02260144910761823,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/lower/01A6H4PZ/01A6H4PZ_lower.obj",
+      "patient": "01A6H4PZ",
+      "accuracy": 0.31448679424323894,
+      "mIoU": 0.020965786282882596,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/lower/01E7MMEF/01E7MMEF_lower.obj",
+      "patient": "01E7MMEF",
+      "accuracy": 0.3122930673762467,
+      "mIoU": 0.020819537825083112,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/lower/01E9V1EX/01E9V1EX_lower.obj",
+      "patient": "01E9V1EX",
+      "accuracy": 0.41649461209944283,
+      "mIoU": 0.0297496151499602,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/lower/01K17AN8/01K17AN8_lower.obj",
+      "patient": "01K17AN8",
+      "accuracy": 0.40850771345654496,
+      "mIoU": 0.02917912238975321,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/lower/0O4502M7/0O4502M7_lower.obj",
+      "patient": "0O4502M7",
+      "accuracy": 0.40291118351457705,
+      "mIoU": 0.02370065785379865,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/lower/1RT7WBH4/1RT7WBH4_lower.obj",
+      "patient": "1RT7WBH4",
+      "accuracy": 0.46037480034174066,
+      "mIoU": 0.030691653356116046,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/lower/35XFO1ZF/35XFO1ZF_lower.obj",
+      "patient": "35XFO1ZF",
+      "accuracy": 0.47709540642431586,
+      "mIoU": 0.031806360428287724,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/lower/3Y8A14TI/3Y8A14TI_lower.obj",
+      "patient": "3Y8A14TI",
+      "accuracy": 0.4461349269264386,
+      "mIoU": 0.03186678049474561,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/lower/4ZIK093I/4ZIK093I_lower.obj",
+      "patient": "4ZIK093I",
+      "accuracy": 0.4153439861531187,
+      "mIoU": 0.02443199918547757,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/lower/6PTI2HX6/6PTI2HX6_lower.obj",
+      "patient": "6PTI2HX6",
+      "accuracy": 0.42550024126566943,
+      "mIoU": 0.02836668275104463,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/upper/BEONHKS1/BEONHKS1_upper.obj",
+      "patient": "BEONHKS1",
+      "accuracy": 0.5081455467759243,
+      "mIoU": 0.033876369785061616,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/upper/CD81F1F4/CD81F1F4_upper.obj",
+      "patient": "CD81F1F4",
+      "accuracy": 0.5800218029815924,
+      "mIoU": 0.03866812019877283,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/upper/CXAJM3O9/CXAJM3O9_upper.obj",
+      "patient": "CXAJM3O9",
+      "accuracy": 0.5120134763720188,
+      "mIoU": 0.034134231758134584,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/upper/DG27PDD4/DG27PDD4_upper.obj",
+      "patient": "DG27PDD4",
+      "accuracy": 0.5959821613945339,
+      "mIoU": 0.04584478164573337,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/upper/DKDRMRFK/DKDRMRFK_upper.obj",
+      "patient": "DKDRMRFK",
+      "accuracy": 0.4271821514070866,
+      "mIoU": 0.028478810093805772,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/upper/EI585456/EI585456_upper.obj",
+      "patient": "EI585456",
+      "accuracy": 0.47118292577551196,
+      "mIoU": 0.0314121950517008,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/upper/ERCT8ZLW/ERCT8ZLW_upper.obj",
+      "patient": "ERCT8ZLW",
+      "accuracy": 0.38636539370247863,
+      "mIoU": 0.022727376100145802,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/upper/FWTHWWD3/FWTHWWD3_upper.obj",
+      "patient": "FWTHWWD3",
+      "accuracy": 0.5903270018828221,
+      "mIoU": 0.0491939168235685,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/upper/GK7OJEPT/GK7OJEPT_upper.obj",
+      "patient": "GK7OJEPT",
+      "accuracy": 0.4628782611877493,
+      "mIoU": 0.033062732941982094,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/upper/H9EM9IEE/H9EM9IEE_upper.obj",
+      "patient": "H9EM9IEE",
+      "accuracy": 0.5254796163069544,
+      "mIoU": 0.03503197442046362,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/upper/KS0FGXGB/KS0FGXGB_upper.obj",
+      "patient": "KS0FGXGB",
+      "accuracy": 0.6012061846067869,
+      "mIoU": 0.040080412307119125,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/upper/NFC5OJPM/NFC5OJPM_upper.obj",
+      "patient": "NFC5OJPM",
+      "accuracy": 0.5252734641179213,
+      "mIoU": 0.03501823094119475,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/upper/NZ9C9J2G/NZ9C9J2G_upper.obj",
+      "patient": "NZ9C9J2G",
+      "accuracy": 0.5667181703876542,
+      "mIoU": 0.03778121135917694,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/upper/O2LXM8BS/O2LXM8BS_upper.obj",
+      "patient": "O2LXM8BS",
+      "accuracy": 0.5000136085897419,
+      "mIoU": 0.035715257756410136,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/upper/O4WFMHT1/O4WFMHT1_upper.obj",
+      "patient": "O4WFMHT1",
+      "accuracy": 0.5320407023639635,
+      "mIoU": 0.03546938015759757,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/upper/Q21I52KT/Q21I52KT_upper.obj",
+      "patient": "Q21I52KT",
+      "accuracy": 0.5146419565923611,
+      "mIoU": 0.04288682971603009,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/upper/QTDZUUZV/QTDZUUZV_upper.obj",
+      "patient": "QTDZUUZV",
+      "accuracy": 0.4536704056804444,
+      "mIoU": 0.03024469371202963,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/upper/RTPHYQ5V/RTPHYQ5V_upper.obj",
+      "patient": "RTPHYQ5V",
+      "accuracy": 0.5401441971160577,
+      "mIoU": 0.041549553624312126,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/upper/VB7GYS2O/VB7GYS2O_upper.obj",
+      "patient": "VB7GYS2O",
+      "accuracy": 0.5565846440510769,
+      "mIoU": 0.04281420338854437,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/upper/VR3UZPCR/VR3UZPCR_upper.obj",
+      "patient": "VR3UZPCR",
+      "accuracy": 0.5459524789138037,
+      "mIoU": 0.038996605636700266,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/upper/XA2VLAUJ/XA2VLAUJ_upper.obj",
+      "patient": "XA2VLAUJ",
+      "accuracy": 0.425918166844858,
+      "mIoU": 0.03042272620320414,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/upper/Y9WQHQMT/Y9WQHQMT_upper.obj",
+      "patient": "Y9WQHQMT",
+      "accuracy": 0.43755004003202563,
+      "mIoU": 0.02917000266880171,
+      "mIoU_teeth": 0.0
+    },
+    {
+      "obj": "data/3DTeethData/data_part_6/upper/YCJO4386/YCJO4386_upper.obj",
+      "patient": "YCJO4386",
+      "accuracy": 0.4227886714059062,
+      "mIoU": 0.028185911427060412,
+      "mIoU_teeth": 0.0
+    }
+  ]
+}

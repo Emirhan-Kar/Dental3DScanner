@@ -1,38 +1,58 @@
-# Python önbellekleri
+# ─── Python önbellekleri ve sanal ortamlar ───
 __pycache__/
 *.py[cod]
 *$py.class
 .venv/
 venv/
-env/
 venv_gpu/
+env/
+.pytest_cache/
+.cache/
 
-#eğitilmiş model
+# ─── Yedekler, arşivler ───
+_yedek_*/
+*.zip
+*.rar
+*.tar.gz
+*.7z
 
-# Büyük Veriler ve Ağırlık Dosyaları
+# ─── Veri seti (Teeth3DS: CC BY-NC-ND 4.0, yeniden dağıtılmaz; bkz. DATA_LICENSE.md) ───
 data/3DTeethData/*
 data/2DTeethData/*
 data/TestVideo/*
+data/four/*
 !data/3DTeethData/.gitkeep
 !data/2DTeethData/.gitkeep
 !data/TestVideo/.gitkeep
-data/four/*
+!data/four/.gitkeep
 
+# ─── Veri setinden türetilen 3D dosyalar ve büyük ara çıktılar ───
 *.obj
 *.ply
 *.stl
+*.npz
+
+# Demo kayıtları (kamera kareleri + yeniden oluşturulmuş mesh; yerelde yeniden üretilir, ~300 MB)
+runs/demo/
+
+# ─── Model ağırlıkları ───
+# Eğitim kontrol noktaları (best/last) depoya girmez; yalnızca demoda kullanılan son model girer.
 *.pth
 *.pt
-*.zip
+!ai_model/best_dental_model.pth
 
-# IDE / Editör
+# ─── IDE / editör ───
 .vscode/
 .idea/
+*.swp
+.DS_Store
+Thumbs.db
+desktop.ini
 
-# Loglar ve Geçici Dosyalar
+# ─── Loglar ve geçici dosyalar ───
 logs/
 *.log
 output/
-.pytest_cache/
 ScreenCamera_*.json
 ScreenCapture_*.png
+~$*.docx

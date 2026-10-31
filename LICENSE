@@ -1,21 +1,57 @@
-MIT License
+DentalScanner Academic Use License
+Copyright (c) 2026 Emirhan Kar & Furkan Genç. All rights reserved.
 
-Copyright (c) 2026 Emirhan Kar & Furkan Genç
+This license applies to the source code, documentation, figures, trained model
+weights and all other material in this repository that was created by the
+copyright holders ("the Software"). Third-party material, in particular the
+Teeth3DS dataset and anything derived from it, is subject to its own license;
+see DATA_LICENSE.md.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+1. Permitted use
+   Permission is granted, free of charge, to individuals and to universities,
+   schools and public research institutions to use, copy and modify the Software
+   solely for non-commercial academic purposes: academic research, teaching,
+   coursework and the preparation of theses and scientific publications.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+2. Conditions
+   a) Any publication, thesis, presentation or other work that uses the Software
+      or results obtained with it must credit the authors and cite this
+      repository (https://github.com/Emirhan-Kar/Dental3DScanner).
+   b) Copies and modified versions may be shared only with others for the
+      permitted academic purposes in Section 1, only free of charge, and only
+      together with this license file and DATA_LICENSE.md, unchanged.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+3. Prohibited use
+   Any use not expressly permitted in Section 1 is prohibited, including but not
+   limited to:
+   a) any commercial use, including use in or for a product, a service, a
+      company, paid consulting or paid development work;
+   b) selling, sublicensing or renting the Software or access to it;
+   c) clinical use: the Software is a research prototype and must not be used
+      to diagnose, treat or make decisions about real patients, or to plan or
+      manufacture dental appliances for real patients;
+   d) using the Software, its outputs or its model weights to train or develop
+      models or products for any non-academic purpose.
+   Any other use requires the prior written permission of the copyright holders.
+
+4. No warranty
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE, ACCURACY AND NONINFRINGEMENT. IN NO EVENT
+   SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+   OTHER LIABILITY ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR
+   ITS USE.
+
+5. Termination
+   Any use in breach of this license automatically terminates the rights granted
+   under it.
+
+-------------------------------------------------------------------------------
+Türkçe özet (bağlayıcı metin yukarıdaki İngilizce metindir):
+Bu yazılım yalnızca ticari olmayan akademik amaçlarla (araştırma, eğitim, ders
+çalışması, tez ve bilimsel yayın) ücretsiz kullanılabilir, kopyalanabilir ve
+değiştirilebilir. Kullanan çalışmalar yazarlara atıf yapmalıdır. Ticari kullanım,
+satış, klinik kullanım (gerçek hastalarda teşhis, tedavi veya planlama) ve izin
+verilen akademik amaçlar dışındaki her türlü kullanım yasaktır; bunlar için
+yazarların önceden yazılı izni gerekir. Veri seti ve ondan türetilen dosyalar
+için DATA_LICENSE.md dosyasına bakınız.

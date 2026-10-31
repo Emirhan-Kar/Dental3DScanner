@@ -1,0 +1,29 @@
+{
+  "nokta_sayisi": 549423,
+  "nokta_dogrulugu_mm": {
+    "ortalama": 0.00874353852123022,
+    "medyan": 0.005685220006853342,
+    "rms": 0.018581347540020943,
+    "p95": 0.02389216423034668,
+    "maks": 1.686474084854126
+  },
+  "mesh_kose_sayisi": 180585,
+  "mesh_dogrulugu_mm": {
+    "ortalama": 0.013971391133964062,
+    "medyan": 0.005383891053497791,
+    "rms": 0.034946952015161514,
+    "p95": 0.05183118209242821,
+    "maks": 0.5160058736801147
+  },
+  "kapsama_dis_0.1mm": 0.9353769424930816,
+  "kapsama_dis_0.2mm": 0.9569838518383359,
+  "kapsama_dis_eti_0.2mm": 0.6480096933647266,
+  "hasta": "VBUD4E5R",
+  "mod": "ideal",
+  "kare": 1461,
+  "goruntu_gurultusu": 3.0,
+  "poz_hatasi_ort_mm": 0.0,
+  "poz_hatasi_maks_mm": 0.0,
+  "kalibrasyon_hatasi": {},
+  "imu": {}
+}

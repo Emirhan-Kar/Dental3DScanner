@@ -29,6 +29,9 @@ icp_stitcher:
   icp_distance_multiplier: 1.5    # Voxel boyutu ile carpilan noktadan-duzleme ICP esik degeri
   icp_max_iterations: 80          # ICP maks iterasyon sayisi
   ransac_max_iterations: 100000   # RANSAC maks iterasyon sayisi
+  registration_mode: "hybrid"     # "hybrid" (ICP takip + gerekirse RANSAC), "global" veya "local"
+  min_fitness: 0.45               # Gecerli hizalama icin min. ortusen nokta orani
+  max_rmse_ratio: 0.55            # Gecerli hizalama: inlier RMSE <= oran * ICP esik mesafesi
 
 # 4. Kamera Kalibrasyon Parametreleri
 calibration:
@@ -39,14 +42,16 @@ calibration:
 
 # 5. 3D Derin Ogrenme (Yapay Zeka Model Egitimi ve Cikarim)
 ai_model:
+  model: "dgcnn"                  # "dgcnn" (yerel komsuluk, onerilen) veya "pointnet"
   in_channels: 6                  # X, Y, Z + Nx, Ny, Nz (Normaller)
   num_classes: 33                 # 32 Dis + 1 Dis Eti (FDI standardi)
-  num_points: 4096                # Model girdisi nokta sayisi
-  batch_size: 4                   # GPU bellek dostu mini-batch
-  epochs: 120                     # Toplam egitim epoch adedi
-  learning_rate: 0.001            # Adam optimizer ogrenme orani
-  lr_step_size: 10                # StepLR adim araligi
-  lr_gamma: 0.5                   # StepLR carpani
+  num_points: 8192                # Modelin tek seferde gordugu nokta sayisi
+  batch_size: 8                   # A100 icin; 8 GB GPU'da 2-4 kullanin
+  epochs: 100                     # Toplam egitim epoch adedi
+  learning_rate: 0.001            # AdamW ogrenme orani (cosine ile azalir)
+  lr_step_size: 10                # Sadece --scheduler step icin
+  lr_gamma: 0.5                   # Sadece --scheduler step icin
+  num_workers: 4                  # DataLoader isci sayisi (Windows'ta 0 guvenli)
   checkpoint_path: "ai_model/best_dental_model.pth"
   data_root: "data/3DTeethData"   # Teeth3DS veri seti dizini
   parts:
@@ -56,6 +61,7 @@ ai_model:
     - "data_part_4"
     - "data_part_5"
     - "data_part_6"
+    - "data_part_7"
 
 # 6. 3D Yuzey Yeniden Yapilandirma ve Kati Model Uretimi (Mesh Olusturma)
 mesh_generator:

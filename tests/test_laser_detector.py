@@ -74,3 +74,17 @@ class TestLaserDetector:
         """Konfigurasyondan LaserDetector olusturma."""
         detector = LaserDetector.from_config(default_config)
         assert detector.intensity_threshold == default_config.laser_detector.intensity_threshold
+
+
+def test_iki_parcali_sutunda_sahte_nokta_yok():
+    """Ayni sutunda iki ayri cizgi parcasi varsa, tepe noktasi ikisinin arasina dusmemeli."""
+    import numpy as np
+    from processing.laser_detector import LaserDetector
+    img = np.zeros((200, 50, 3), dtype=np.uint8)
+    img[49:52, :, 2] = 255      # guclu parca (v~50)
+    img[149:151, :, 2] = 230    # daha zayif parca (v~150)
+    tepe, _ = LaserDetector().detect_subpixel_peaks(img)
+    v = np.array([p[1] for p in tepe])
+    assert np.all(np.abs(v - 50) < 1.0)
+    eski, _ = LaserDetector(single_peak=False).detect_subpixel_peaks(img)
+    assert np.all(np.abs(np.array([p[1] for p in eski]) - 50) > 10)   # eski davranis: araya duser

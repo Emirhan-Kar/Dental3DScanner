@@ -1,0 +1,62 @@
+{
+  "nokta_sayisi": 549423,
+  "nokta_dogrulugu_mm": {
+    "ortalama": 0.41109469532966614,
+    "medyan": 0.29862383008003235,
+    "rms": 0.5620299577713013,
+    "p95": 1.1951770782470703,
+    "maks": 2.1131653785705566
+  },
+  "mesh_kose_sayisi": 265521,
+  "mesh_dogrulugu_mm": {
+    "ortalama": 0.43275225162506104,
+    "medyan": 0.3165350556373596,
+    "rms": 0.5786767601966858,
+    "p95": 1.2011069059371948,
+    "maks": 2.1872754096984863
+  },
+  "kapsama_dis_0.1mm": 0.24100599093756653,
+  "kapsama_dis_0.2mm": 0.46819025028130035,
+  "kapsama_dis_eti_0.2mm": 0.3005218444930949,
+  "en_iyi_hizalama_sonrasi": {
+    "nokta_dogrulugu_mm": {
+      "ortalama": 0.38114500045776367,
+      "medyan": 0.2436014711856842,
+      "rms": 0.544558584690094,
+      "p95": 1.2271264791488647,
+      "maks": 1.9716932773590088
+    },
+    "mesh_dogrulugu_mm": {
+      "ortalama": 0.398054301738739,
+      "medyan": 0.2718368172645569,
+      "rms": 0.5539621114730835,
+      "p95": 1.220897912979126,
+      "maks": 2.039801836013794
+    },
+    "kapsama_dis_0.1mm": 0.3226287139251285,
+    "kapsama_dis_0.2mm": 0.5466502448073473
+  },
+  "hasta": "VBUD4E5R",
+  "mod": "imu_ham",
+  "kare": 1461,
+  "goruntu_gurultusu": 3.0,
+  "poz_hatasi_ort_mm": 1.05678308283235,
+  "poz_hatasi_maks_mm": 2.1238286058771867,
+  "kalibrasyon_hatasi": {},
+  "imu": {},
+  "imu_ham_poz_hatasi_ort_mm": 1.05678308283235,
+  "yama_hizalama_gecerli_orani": null,
+  "yama_hizalamalari": [],
+  "gecis_basina_poz_hatasi_mm": {
+    "tepe": 0.40383759030753347,
+    "yanak": 1.0058520729426361,
+    "dil": 1.7606595852468803
+  },
+  "segmentasyon": {
+    "mIoU_dis": 0.536393382959911,
+    "dogruluk": 0.7323413214020736,
+    "dice": 0.6880568024274939,
+    "model": "dgcnn",
+    "kose": 265521
+  }
+}

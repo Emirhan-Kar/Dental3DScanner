@@ -1,0 +1,39 @@
+# Metin dosyalari: depoda LF, calisma kopyasinda isletim sistemine gore
+* text=auto
+
+# Windows betikleri her zaman CRLF kalmali (LF ile cmd.exe hatali calisabilir)
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Kod ve yapilandirma: her zaman LF
+*.py   text eol=lf
+*.sh   text eol=lf
+*.yaml text eol=lf
+*.yml  text eol=lf
+*.md   text eol=lf
+*.css  text eol=lf
+*.json text eol=lf
+*.csv  text eol=lf
+*.ipynb text eol=lf
+
+# Ikili dosyalar: satir sonu donusumu ve metin farki yapilmaz
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.pdf  binary
+*.docx binary
+*.xlsx binary
+*.npy  binary
+*.npz  binary
+*.bin  binary
+*.pth  binary
+*.pt   binary
+*.ply  binary
+*.obj  binary
+*.stl  binary
+*.zip  binary
+
+# GitHub dil istatistiklerinde not defterleri ve sonuc dosyalari sayilmasin
+*.ipynb linguist-documentation
+runs/** linguist-generated
+rapor_gorselleri/** linguist-documentation

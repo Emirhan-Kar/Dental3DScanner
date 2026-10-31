@@ -12,12 +12,16 @@ class LaserDetector:
       lower_hsv=(0, 100, 100),
       upper_hsv=(10, 255, 255),
       intensity_threshold=50,
+      single_peak=True,
   ):
     """Lazer tespit modülü.
 
     lower_hsv: Lazer rengi alt eşiği (varsayılan kırmızı)
     upper_hsv: Lazer rengi üst eşiği
     intensity_threshold: Alt-piksel hesaplamasına dahil edilecek minimum parlaklık
+    single_peak: True ise her sütunda sadece en güçlü bağlantılı lazer parçası kullanılır.
+        (Aynı sütunda iki ayrı çizgi parçası varsa -örn. dişin önü ve arkası- hepsinin
+        ağırlık merkezini almak iki parçanın ARASINA sahte bir nokta koyar.)
 
     Raises:
         ValueError: HSV değerleri geçersiz aralıkta ise
@@ -39,6 +43,7 @@ class LaserDetector:
       raise ValueError(f"HSV dizileri 3 elemanlı olmalıdır. lower: {self.lower_hsv.shape}, upper: {self.upper_hsv.shape}")
 
     self.intensity_threshold = intensity_threshold
+    self.single_peak = bool(single_peak)
 
   @classmethod
   def from_config(cls, config=None):
@@ -146,6 +151,12 @@ class LaserDetector:
       valid_indices = np.where(column >= self.intensity_threshold)[0]
 
       if len(valid_indices) > 0:
+        if self.single_peak and len(valid_indices) > 1:
+          # Bağlantılı parçalara ayır, toplam parlaklığı en yüksek olanı seç
+          kirilma = np.where(np.diff(valid_indices) > 1)[0] + 1
+          parcalar = np.split(valid_indices, kirilma)
+          if len(parcalar) > 1:
+            valid_indices = max(parcalar, key=lambda p: column[p].sum())
         intensities = column[valid_indices]
         total_intensity = np.sum(intensities)
 

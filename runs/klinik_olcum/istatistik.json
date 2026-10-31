@@ -1,0 +1,795 @@
+{
+ "test_seti": {
+  "tarama": 31,
+  "dis": 418,
+  "genislik_mae": 0.34120813397129185,
+  "genislik_medyan": 0.08650000000000002,
+  "genislik_yanlilik": 0.18542344497607657,
+  "genislik_sd": 0.8319239555069784,
+  "genislik_05mm": 0.8588516746411483,
+  "dis_turu": {
+   "Orta kesici": {
+    "n": 62,
+    "mae": 0.18309677419354842
+   },
+   "Yan kesici": {
+    "n": 61,
+    "mae": 0.16026229508196732
+   },
+   "Köpek": {
+    "n": 61,
+    "mae": 0.17914754098360652
+   },
+   "1. küçük azı": {
+    "n": 62,
+    "mae": 0.18764516129032266
+   },
+   "2. küçük azı": {
+    "n": 60,
+    "mae": 0.22103333333333322
+   },
+   "1. büyük azı": {
+    "n": 60,
+    "mae": 0.5768333333333331
+   },
+   "2. büyük azı": {
+    "n": 50,
+    "mae": 0.9774200000000001
+   },
+   "3. büyük azı": {
+    "n": 2,
+    "mae": 1.0959999999999996
+   }
+  },
+  "ark_mevcut": {
+   "n": 31,
+   "mae": 1.2581935483870972,
+   "yanlilik": 1.0890322580645155,
+   "maks": 21.680999999999997
+  },
+  "ark_gerekli": {
+   "n": 27,
+   "mae": 1.1677407407407414,
+   "yanlilik": 1.1332222222222232,
+   "maks": 10.748000000000005
+  },
+  "ark_farki": {
+   "n": 27,
+   "mae": 1.2497777777777779,
+   "yanlilik": 0.33392592592592585,
+   "maks": 10.934000000000001
+  },
+  "interkanin": {
+   "n": 30,
+   "mae": 0.42556666666666676,
+   "yanlilik": 0.41629999999999967,
+   "maks": 11.274000000000001
+  },
+  "intermolar": {
+   "n": 29,
+   "mae": 0.4523448275862075,
+   "yanlilik": 0.0560689655172413,
+   "maks": 5.007000000000005
+  },
+  "capraskilik_sinifi_uyum": {
+   "n": 27,
+   "uyum": 0.7777777777777778
+  },
+  "eksik_bulunan": 5,
+  "fazla_bulunan": 4
+ },
+ "sanal_tarama": [
+  {
+   "tarama": "VBUD4E5R_lower",
+   "ayar": {
+    "vaka": "VBUD4E5R_lower.obj",
+    "gecisler": [
+     "tepe",
+     "yanak",
+     "dil"
+    ],
+    "adim": 1.0,
+    "mod": "ideal",
+    "gurultu": 3.0
+   },
+   "istatistik": {
+    "tarama": 1,
+    "dis": 14,
+    "genislik_mae": 0.4734285714285713,
+    "genislik_medyan": 0.45350000000000046,
+    "genislik_yanlilik": -0.4704285714285712,
+    "genislik_sd": 0.36014926697897703,
+    "genislik_05mm": 0.5,
+    "dis_turu": {
+     "Orta kesici": {
+      "n": 2,
+      "mae": 0.3820000000000001
+     },
+     "Yan kesici": {
+      "n": 2,
+      "mae": 0.657
+     },
+     "Köpek": {
+      "n": 2,
+      "mae": 0.5880000000000001
+     },
+     "1. küçük azı": {
+      "n": 2,
+      "mae": 0.3394999999999997
+     },
+     "2. küçük azı": {
+      "n": 2,
+      "mae": 0.14400000000000013
+     },
+     "1. büyük azı": {
+      "n": 2,
+      "mae": 0.2995000000000001
+     },
+     "2. büyük azı": {
+      "n": 2,
+      "mae": 0.903999999999999
+     }
+    },
+    "ark_mevcut": {
+     "n": 1,
+     "mae": 0.09599999999998943,
+     "yanlilik": 0.09599999999998943,
+     "maks": 0.09599999999998943
+    },
+    "ark_gerekli": {
+     "n": 1,
+     "mae": 4.180000000000007,
+     "yanlilik": -4.180000000000007,
+     "maks": 4.180000000000007
+    },
+    "ark_farki": {
+     "n": 1,
+     "mae": 4.278,
+     "yanlilik": -4.278,
+     "maks": 4.278
+    },
+    "interkanin": {
+     "n": 1,
+     "mae": 0.0799999999999983,
+     "yanlilik": 0.0799999999999983,
+     "maks": 0.0799999999999983
+    },
+    "intermolar": {
+     "n": 1,
+     "mae": 0.054000000000002046,
+     "yanlilik": 0.054000000000002046,
+     "maks": 0.054000000000002046
+    },
+    "capraskilik_sinifi_uyum": {
+     "n": 1,
+     "uyum": 0.0
+    },
+    "eksik_bulunan": 0,
+    "fazla_bulunan": 0
+   }
+  },
+  {
+   "tarama": "VBUD4E5R_lower",
+   "ayar": {
+    "vaka": "VBUD4E5R_lower.obj",
+    "gecisler": [
+     "tepe",
+     "yanak",
+     "dil"
+    ],
+    "adim": 0.5,
+    "mod": "imu_ham",
+    "gurultu": 3.0
+   },
+   "istatistik": {
+    "tarama": 1,
+    "dis": 14,
+    "genislik_mae": 0.8093571428571428,
+    "genislik_medyan": 0.5909999999999997,
+    "genislik_yanlilik": -0.43435714285714283,
+    "genislik_sd": 1.0061295685900544,
+    "genislik_05mm": 0.35714285714285715,
+    "dis_turu": {
+     "Orta kesici": {
+      "n": 2,
+      "mae": 0.35650000000000004
+     },
+     "Yan kesici": {
+      "n": 2,
+      "mae": 0.3889999999999998
+     },
+     "Köpek": {
+      "n": 2,
+      "mae": 0.6889999999999996
+     },
+     "1. küçük azı": {
+      "n": 2,
+      "mae": 0.5565000000000002
+     },
+     "2. küçük azı": {
+      "n": 2,
+      "mae": 0.29349999999999987
+     },
+     "1. büyük azı": {
+      "n": 2,
+      "mae": 1.4075000000000006
+     },
+     "2. büyük azı": {
+      "n": 2,
+      "mae": 1.9734999999999996
+     }
+    },
+    "ark_mevcut": {
+     "n": 1,
+     "mae": 1.1710000000000065,
+     "yanlilik": -1.1710000000000065,
+     "maks": 1.1710000000000065
+    },
+    "ark_gerekli": {
+     "n": 1,
+     "mae": 4.570000000000007,
+     "yanlilik": -4.570000000000007,
+     "maks": 4.570000000000007
+    },
+    "ark_farki": {
+     "n": 1,
+     "mae": 3.4,
+     "yanlilik": -3.4,
+     "maks": 3.4
+    },
+    "interkanin": {
+     "n": 1,
+     "mae": 0.7439999999999998,
+     "yanlilik": -0.7439999999999998,
+     "maks": 0.7439999999999998
+    },
+    "intermolar": {
+     "n": 1,
+     "mae": 1.9450000000000003,
+     "yanlilik": -1.9450000000000003,
+     "maks": 1.9450000000000003
+    },
+    "capraskilik_sinifi_uyum": {
+     "n": 1,
+     "uyum": 0.0
+    },
+    "eksik_bulunan": 0,
+    "fazla_bulunan": 0
+   }
+  },
+  {
+   "tarama": "VBUD4E5R_lower",
+   "ayar": {
+    "vaka": "VBUD4E5R_lower.obj",
+    "gecisler": [
+     "tepe",
+     "yanak",
+     "dil"
+    ],
+    "adim": 0.5,
+    "mod": "imu",
+    "gurultu": 3.0
+   },
+   "istatistik": {
+    "tarama": 1,
+    "dis": 14,
+    "genislik_mae": 0.2789285714285713,
+    "genislik_medyan": 0.2849999999999997,
+    "genislik_yanlilik": -0.26392857142857123,
+    "genislik_sd": 0.2571959636857929,
+    "genislik_05mm": 0.7857142857142857,
+    "dis_turu": {
+     "Orta kesici": {
+      "n": 2,
+      "mae": 0.08650000000000002
+     },
+     "Yan kesici": {
+      "n": 2,
+      "mae": 0.2849999999999997
+     },
+     "Köpek": {
+      "n": 2,
+      "mae": 0.49350000000000005
+     },
+     "1. küçük azı": {
+      "n": 2,
+      "mae": 0.1719999999999997
+     },
+     "2. küçük azı": {
+      "n": 2,
+      "mae": 0.05250000000000021
+     },
+     "1. büyük azı": {
+      "n": 2,
+      "mae": 0.20750000000000046
+     },
+     "2. büyük azı": {
+      "n": 2,
+      "mae": 0.6554999999999991
+     }
+    },
+    "ark_mevcut": {
+     "n": 1,
+     "mae": 0.04100000000001103,
+     "yanlilik": -0.04100000000001103,
+     "maks": 0.04100000000001103
+    },
+    "ark_gerekli": {
+     "n": 1,
+     "mae": 1.9690000000000083,
+     "yanlilik": -1.9690000000000083,
+     "maks": 1.9690000000000083
+    },
+    "ark_farki": {
+     "n": 1,
+     "mae": 1.9289999999999998,
+     "yanlilik": -1.9289999999999998,
+     "maks": 1.9289999999999998
+    },
+    "interkanin": {
+     "n": 1,
+     "mae": 0.3509999999999991,
+     "yanlilik": -0.3509999999999991,
+     "maks": 0.3509999999999991
+    },
+    "intermolar": {
+     "n": 1,
+     "mae": 0.6199999999999974,
+     "yanlilik": -0.6199999999999974,
+     "maks": 0.6199999999999974
+    },
+    "capraskilik_sinifi_uyum": {
+     "n": 1,
+     "uyum": 0.0
+    },
+    "eksik_bulunan": 0,
+    "fazla_bulunan": 0
+   }
+  },
+  {
+   "tarama": "VBUD4E5R_lower",
+   "ayar": {
+    "vaka": "VBUD4E5R_lower.obj",
+    "gecisler": [
+     "tepe",
+     "yanak",
+     "dil"
+    ],
+    "adim": 0.5,
+    "mod": "ideal",
+    "gurultu": 3.0
+   },
+   "istatistik": {
+    "tarama": 1,
+    "dis": 14,
+    "genislik_mae": 0.2169999999999999,
+    "genislik_medyan": 0.17799999999999994,
+    "genislik_yanlilik": -0.20857142857142832,
+    "genislik_sd": 0.1824161406006834,
+    "genislik_05mm": 0.9285714285714286,
+    "dis_turu": {
+     "Orta kesici": {
+      "n": 2,
+      "mae": 0.11649999999999983
+     },
+     "Yan kesici": {
+      "n": 2,
+      "mae": 0.17799999999999994
+     },
+     "Köpek": {
+      "n": 2,
+      "mae": 0.33499999999999996
+     },
+     "1. küçük azı": {
+      "n": 2,
+      "mae": 0.2224999999999997
+     },
+     "2. küçük azı": {
+      "n": 2,
+      "mae": 0.03950000000000031
+     },
+     "1. büyük azı": {
+      "n": 2,
+      "mae": 0.13350000000000062
+     },
+     "2. büyük azı": {
+      "n": 2,
+      "mae": 0.4939999999999989
+     }
+    },
+    "ark_mevcut": {
+     "n": 1,
+     "mae": 0.24399999999999977,
+     "yanlilik": 0.24399999999999977,
+     "maks": 0.24399999999999977
+    },
+    "ark_gerekli": {
+     "n": 1,
+     "mae": 1.6940000000000026,
+     "yanlilik": -1.6940000000000026,
+     "maks": 1.6940000000000026
+    },
+    "ark_farki": {
+     "n": 1,
+     "mae": 1.9379999999999997,
+     "yanlilik": -1.9379999999999997,
+     "maks": 1.9379999999999997
+    },
+    "interkanin": {
+     "n": 1,
+     "mae": 0.06299999999999883,
+     "yanlilik": 0.06299999999999883,
+     "maks": 0.06299999999999883
+    },
+    "intermolar": {
+     "n": 1,
+     "mae": 0.08399999999999608,
+     "yanlilik": -0.08399999999999608,
+     "maks": 0.08399999999999608
+    },
+    "capraskilik_sinifi_uyum": {
+     "n": 1,
+     "uyum": 0.0
+    },
+    "eksik_bulunan": 0,
+    "fazla_bulunan": 0
+   }
+  },
+  {
+   "tarama": "VBUD4E5R_upper",
+   "ayar": {
+    "vaka": "VBUD4E5R_upper.obj",
+    "gecisler": [
+     "tepe",
+     "yanak",
+     "dil"
+    ],
+    "adim": 0.5,
+    "mod": "imu",
+    "gurultu": 3.0
+   },
+   "istatistik": {
+    "tarama": 1,
+    "dis": 14,
+    "genislik_mae": 0.4205000000000001,
+    "genislik_medyan": 0.2975000000000003,
+    "genislik_yanlilik": -0.1656428571428574,
+    "genislik_sd": 0.5656060884155573,
+    "genislik_05mm": 0.5714285714285714,
+    "dis_turu": {
+     "Orta kesici": {
+      "n": 2,
+      "mae": 0.07200000000000006
+     },
+     "Yan kesici": {
+      "n": 2,
+      "mae": 0.28700000000000037
+     },
+     "Köpek": {
+      "n": 2,
+      "mae": 0.6419999999999999
+     },
+     "1. küçük azı": {
+      "n": 2,
+      "mae": 0.34450000000000003
+     },
+     "2. küçük azı": {
+      "n": 2,
+      "mae": 0.27400000000000047
+     },
+     "1. büyük azı": {
+      "n": 2,
+      "mae": 0.30849999999999955
+     },
+     "2. büyük azı": {
+      "n": 2,
+      "mae": 1.0155000000000003
+     }
+    },
+    "ark_mevcut": {
+     "n": 1,
+     "mae": 1.1110000000000042,
+     "yanlilik": 1.1110000000000042,
+     "maks": 1.1110000000000042
+    },
+    "ark_gerekli": {
+     "n": 1,
+     "mae": 2.7150000000000034,
+     "yanlilik": -2.7150000000000034,
+     "maks": 2.7150000000000034
+    },
+    "ark_farki": {
+     "n": 1,
+     "mae": 3.826,
+     "yanlilik": -3.826,
+     "maks": 3.826
+    },
+    "interkanin": {
+     "n": 1,
+     "mae": 0.5859999999999985,
+     "yanlilik": 0.5859999999999985,
+     "maks": 0.5859999999999985
+    },
+    "intermolar": {
+     "n": 1,
+     "mae": 0.44299999999999784,
+     "yanlilik": 0.44299999999999784,
+     "maks": 0.44299999999999784
+    },
+    "capraskilik_sinifi_uyum": {
+     "n": 1,
+     "uyum": 0.0
+    },
+    "eksik_bulunan": 0,
+    "fazla_bulunan": 0
+   }
+  },
+  {
+   "tarama": "VBUD4E5R_upper",
+   "ayar": {
+    "vaka": "VBUD4E5R_upper.obj",
+    "gecisler": [
+     "tepe",
+     "yanak",
+     "dil"
+    ],
+    "adim": 0.5,
+    "mod": "imu_ham",
+    "gurultu": 3.0
+   },
+   "istatistik": {
+    "tarama": 1,
+    "dis": 14,
+    "genislik_mae": 1.9270714285714285,
+    "genislik_medyan": 1.1849999999999996,
+    "genislik_yanlilik": -0.41878571428571437,
+    "genislik_sd": 2.6874019532332256,
+    "genislik_05mm": 0.21428571428571427,
+    "dis_turu": {
+     "Orta kesici": {
+      "n": 2,
+      "mae": 0.7734999999999994
+     },
+     "Yan kesici": {
+      "n": 2,
+      "mae": 2.2955
+     },
+     "Köpek": {
+      "n": 2,
+      "mae": 0.8445
+     },
+     "1. küçük azı": {
+      "n": 2,
+      "mae": 0.37399999999999967
+     },
+     "2. küçük azı": {
+      "n": 2,
+      "mae": 1.362
+     },
+     "1. büyük azı": {
+      "n": 2,
+      "mae": 3.1315000000000004
+     },
+     "2. büyük azı": {
+      "n": 2,
+      "mae": 4.708499999999999
+     }
+    },
+    "ark_mevcut": {
+     "n": 1,
+     "mae": 0.6820000000000022,
+     "yanlilik": 0.6820000000000022,
+     "maks": 0.6820000000000022
+    },
+    "ark_gerekli": {
+     "n": 1,
+     "mae": 3.2510000000000048,
+     "yanlilik": 3.2510000000000048,
+     "maks": 3.2510000000000048
+    },
+    "ark_farki": {
+     "n": 1,
+     "mae": 2.5679999999999996,
+     "yanlilik": 2.5679999999999996,
+     "maks": 2.5679999999999996
+    },
+    "interkanin": {
+     "n": 1,
+     "mae": 0.4339999999999975,
+     "yanlilik": 0.4339999999999975,
+     "maks": 0.4339999999999975
+    },
+    "intermolar": {
+     "n": 1,
+     "mae": 1.783999999999999,
+     "yanlilik": -1.783999999999999,
+     "maks": 1.783999999999999
+    },
+    "capraskilik_sinifi_uyum": {
+     "n": 1,
+     "uyum": 0.0
+    },
+    "eksik_bulunan": 0,
+    "fazla_bulunan": 2
+   }
+  },
+  {
+   "tarama": "VBUD4E5R_upper",
+   "ayar": {
+    "vaka": "VBUD4E5R_upper.obj",
+    "gecisler": [
+     "tepe",
+     "yanak",
+     "dil"
+    ],
+    "adim": 1.0,
+    "mod": "ideal",
+    "gurultu": 3.0
+   },
+   "istatistik": {
+    "tarama": 1,
+    "dis": 14,
+    "genislik_mae": 0.5994999999999998,
+    "genislik_medyan": 0.4794999999999998,
+    "genislik_yanlilik": -0.3569285714285716,
+    "genislik_sd": 0.6052407612850268,
+    "genislik_05mm": 0.5,
+    "dis_turu": {
+     "Orta kesici": {
+      "n": 2,
+      "mae": 0.3489999999999993
+     },
+     "Yan kesici": {
+      "n": 2,
+      "mae": 0.859
+     },
+     "Köpek": {
+      "n": 2,
+      "mae": 0.8129999999999997
+     },
+     "1. küçük azı": {
+      "n": 2,
+      "mae": 0.8284999999999996
+     },
+     "2. küçük azı": {
+      "n": 2,
+      "mae": 0.3494999999999999
+     },
+     "1. büyük azı": {
+      "n": 2,
+      "mae": 0.3899999999999997
+     },
+     "2. büyük azı": {
+      "n": 2,
+      "mae": 0.6075000000000008
+     }
+    },
+    "ark_mevcut": {
+     "n": 1,
+     "mae": 0.534000000000006,
+     "yanlilik": 0.534000000000006,
+     "maks": 0.534000000000006
+    },
+    "ark_gerekli": {
+     "n": 1,
+     "mae": 3.3149999999999977,
+     "yanlilik": -3.3149999999999977,
+     "maks": 3.3149999999999977
+    },
+    "ark_farki": {
+     "n": 1,
+     "mae": 3.85,
+     "yanlilik": -3.85,
+     "maks": 3.85
+    },
+    "interkanin": {
+     "n": 1,
+     "mae": 0.21399999999999864,
+     "yanlilik": -0.21399999999999864,
+     "maks": 0.21399999999999864
+    },
+    "intermolar": {
+     "n": 1,
+     "mae": 0.012000000000000455,
+     "yanlilik": 0.012000000000000455,
+     "maks": 0.012000000000000455
+    },
+    "capraskilik_sinifi_uyum": {
+     "n": 1,
+     "uyum": 0.0
+    },
+    "eksik_bulunan": 0,
+    "fazla_bulunan": 0
+   }
+  },
+  {
+   "tarama": "VBUD4E5R_upper",
+   "ayar": {
+    "vaka": "VBUD4E5R_upper.obj",
+    "gecisler": [
+     "tepe",
+     "yanak",
+     "dil"
+    ],
+    "adim": 0.5,
+    "mod": "ideal",
+    "gurultu": 3.0
+   },
+   "istatistik": {
+    "tarama": 1,
+    "dis": 14,
+    "genislik_mae": 0.2666428571428572,
+    "genislik_medyan": 0.2070000000000003,
+    "genislik_yanlilik": -0.2536428571428573,
+    "genislik_sd": 0.2843455663429642,
+    "genislik_05mm": 0.9285714285714286,
+    "dis_turu": {
+     "Orta kesici": {
+      "n": 2,
+      "mae": 0.09750000000000014
+     },
+     "Yan kesici": {
+      "n": 2,
+      "mae": 0.2110000000000003
+     },
+     "Köpek": {
+      "n": 2,
+      "mae": 0.6445000000000003
+     },
+     "1. küçük azı": {
+      "n": 2,
+      "mae": 0.14150000000000018
+     },
+     "2. küçük azı": {
+      "n": 2,
+      "mae": 0.13149999999999995
+     },
+     "1. büyük azı": {
+      "n": 2,
+      "mae": 0.2834999999999992
+     },
+     "2. büyük azı": {
+      "n": 2,
+      "mae": 0.3570000000000002
+     }
+    },
+    "ark_mevcut": {
+     "n": 1,
+     "mae": 0.38800000000000523,
+     "yanlilik": 0.38800000000000523,
+     "maks": 0.38800000000000523
+    },
+    "ark_gerekli": {
+     "n": 1,
+     "mae": 2.4339999999999975,
+     "yanlilik": -2.4339999999999975,
+     "maks": 2.4339999999999975
+    },
+    "ark_farki": {
+     "n": 1,
+     "mae": 2.823,
+     "yanlilik": -2.823,
+     "maks": 2.823
+    },
+    "interkanin": {
+     "n": 1,
+     "mae": 0.030000000000001137,
+     "yanlilik": -0.030000000000001137,
+     "maks": 0.030000000000001137
+    },
+    "intermolar": {
+     "n": 1,
+     "mae": 0.054000000000002046,
+     "yanlilik": 0.054000000000002046,
+     "maks": 0.054000000000002046
+    },
+    "capraskilik_sinifi_uyum": {
+     "n": 1,
+     "uyum": 0.0
+    },
+    "eksik_bulunan": 0,
+    "fazla_bulunan": 0
+   }
+  }
+ ]
+}

@@ -40,7 +40,10 @@ DEFAULT_CONFIG = {
         "ransac_distance_multiplier": 3.0,
         "icp_distance_multiplier": 1.5,
         "icp_max_iterations": 80,
-        "ransac_max_iterations": 100000
+        "ransac_max_iterations": 100000,
+        "registration_mode": "hybrid",
+        "min_fitness": 0.45,
+        "max_rmse_ratio": 0.55
     },
     "calibration": {
         "chessboard_size": [9, 6],
@@ -49,11 +52,13 @@ DEFAULT_CONFIG = {
         "output_path": "calibration/camera_params.yaml"
     },
     "ai_model": {
+        "model": "dgcnn",
         "in_channels": 6,
         "num_classes": 33,
-        "num_points": 4096,
-        "batch_size": 4,
-        "epochs": 120,
+        "num_points": 8192,
+        "batch_size": 8,
+        "epochs": 100,
+        "num_workers": 4,
         "learning_rate": 0.001,
         "lr_step_size": 10,
         "lr_gamma": 0.5,
@@ -65,7 +70,8 @@ DEFAULT_CONFIG = {
             "data_part_3",
             "data_part_4",
             "data_part_5",
-            "data_part_6"
+            "data_part_6",
+            "data_part_7"
         ]
     },
     "mesh_generator": {

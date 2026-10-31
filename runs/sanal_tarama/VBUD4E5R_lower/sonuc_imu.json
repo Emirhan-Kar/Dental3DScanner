@@ -1,0 +1,423 @@
+{
+  "nokta_sayisi": 549423,
+  "nokta_dogrulugu_mm": {
+    "ortalama": 0.21648138761520386,
+    "medyan": 0.17428964376449585,
+    "rms": 0.2758684456348419,
+    "p95": 0.5246807932853699,
+    "maks": 2.75243878364563
+  },
+  "mesh_kose_sayisi": 182084,
+  "mesh_dogrulugu_mm": {
+    "ortalama": 0.25790515542030334,
+    "medyan": 0.23556670546531677,
+    "rms": 0.3161587119102478,
+    "p95": 0.5706402659416199,
+    "maks": 2.7726833820343018
+  },
+  "kapsama_dis_0.1mm": 0.2628409816622571,
+  "kapsama_dis_0.2mm": 0.4832740321746799,
+  "kapsama_dis_eti_0.2mm": 0.2815344155754747,
+  "en_iyi_hizalama_sonrasi": {
+    "nokta_dogrulugu_mm": {
+      "ortalama": 0.15547563135623932,
+      "medyan": 0.10591015964746475,
+      "rms": 0.22082075476646423,
+      "p95": 0.4705747365951538,
+      "maks": 2.406547784805298
+    },
+    "mesh_dogrulugu_mm": {
+      "ortalama": 0.1628907322883606,
+      "medyan": 0.10845354199409485,
+      "rms": 0.2327253669500351,
+      "p95": 0.4978175759315491,
+      "maks": 2.4272868633270264
+    },
+    "kapsama_dis_0.1mm": 0.4074597816500928,
+    "kapsama_dis_0.2mm": 0.626372289632941
+  },
+  "hasta": "VBUD4E5R",
+  "mod": "imu",
+  "kare": 1461,
+  "goruntu_gurultusu": 3.0,
+  "poz_hatasi_ort_mm": 0.43725444233764754,
+  "poz_hatasi_maks_mm": 1.28530019044814,
+  "kalibrasyon_hatasi": {},
+  "imu": {},
+  "imu_ham_poz_hatasi_ort_mm": 1.05678308283235,
+  "yama_hizalama_gecerli_orani": 0.6944444444444444,
+  "yama_hizalamalari": [
+    {
+      "yama": 1,
+      "gecis": 0,
+      "fitness": 0.05459459459459459,
+      "inlier_rmse": 0.39153880084505716,
+      "ransac_used": false,
+      "valid": false,
+      "candidates": 1,
+      "rejected_by_gate": 3
+    },
+    {
+      "yama": 2,
+      "gecis": 0,
+      "fitness": 0.09760956175298804,
+      "inlier_rmse": 0.3359009230712436,
+      "ransac_used": false,
+      "valid": false,
+      "candidates": 1,
+      "rejected_by_gate": 1
+    },
+    {
+      "yama": 3,
+      "gecis": 0,
+      "fitness": 0.10795087265675501,
+      "inlier_rmse": 0.3095622284227694,
+      "ransac_used": false,
+      "valid": false,
+      "candidates": 1,
+      "rejected_by_gate": 1
+    },
+    {
+      "yama": 4,
+      "gecis": 0,
+      "fitness": 0.08971704623878538,
+      "inlier_rmse": 0.3646365237204375,
+      "ransac_used": false,
+      "valid": false,
+      "candidates": 1,
+      "rejected_by_gate": 2
+    },
+    {
+      "yama": 5,
+      "gecis": 0,
+      "fitness": 0.0,
+      "inlier_rmse": Infinity,
+      "ransac_used": false,
+      "valid": false,
+      "candidates": 1,
+      "rejected_by_gate": 1
+    },
+    {
+      "yama": 6,
+      "gecis": 0,
+      "fitness": 0.07477744807121661,
+      "inlier_rmse": 0.24640929197432465,
+      "ransac_used": false,
+      "valid": false,
+      "candidates": 1,
+      "rejected_by_gate": 2
+    },
+    {
+      "yama": 7,
+      "gecis": 0,
+      "fitness": 0.19076923076923077,
+      "inlier_rmse": 0.25562365224211536,
+      "ransac_used": false,
+      "valid": false,
+      "candidates": 1,
+      "rejected_by_gate": 1
+    },
+    {
+      "yama": 8,
+      "gecis": 0,
+      "fitness": 0.0,
+      "inlier_rmse": Infinity,
+      "ransac_used": false,
+      "valid": false,
+      "candidates": 1,
+      "rejected_by_gate": 1
+    },
+    {
+      "yama": 9,
+      "gecis": 0,
+      "fitness": 0.09865152590489709,
+      "inlier_rmse": 0.3479451204746596,
+      "ransac_used": false,
+      "valid": false,
+      "candidates": 1,
+      "rejected_by_gate": 2
+    },
+    {
+      "yama": 10,
+      "gecis": 0,
+      "fitness": 0.10058675607711651,
+      "inlier_rmse": 0.28591089378394574,
+      "ransac_used": false,
+      "valid": false,
+      "candidates": 1,
+      "rejected_by_gate": 1
+    },
+    {
+      "yama": 11,
+      "gecis": 0,
+      "fitness": 0.07426900584795322,
+      "inlier_rmse": 0.3035759500267023,
+      "ransac_used": false,
+      "valid": false,
+      "candidates": 1,
+      "rejected_by_gate": 1
+    },
+    {
+      "yama": 12,
+      "gecis": 0,
+      "fitness": 0.8001464128843339,
+      "inlier_rmse": 0.24709556962735021,
+      "ransac_used": false,
+      "valid": true,
+      "candidates": 1,
+      "rejected_by_gate": 0
+    },
+    {
+      "yama": 13,
+      "gecis": 1,
+      "fitness": 0.877885331347729,
+      "inlier_rmse": 0.2121399914297133,
+      "ransac_used": false,
+      "valid": true,
+      "candidates": 1,
+      "rejected_by_gate": 0
+    },
+    {
+      "yama": 14,
+      "gecis": 1,
+      "fitness": 0.9158222915042868,
+      "inlier_rmse": 0.2013866008370503,
+      "ransac_used": false,
+      "valid": true,
+      "candidates": 1,
+      "rejected_by_gate": 0
+    },
+    {
+      "yama": 15,
+      "gecis": 1,
+      "fitness": 0.7289204097714737,
+      "inlier_rmse": 0.23135332527365562,
+      "ransac_used": false,
+      "valid": true,
+      "candidates": 1,
+      "rejected_by_gate": 0
+    },
+    {
+      "yama": 16,
+      "gecis": 1,
+      "fitness": 0.5787427090084252,
+      "inlier_rmse": 0.24801846845092881,
+      "ransac_used": false,
+      "valid": true,
+      "candidates": 1,
+      "rejected_by_gate": 0
+    },
+    {
+      "yama": 17,
+      "gecis": 1,
+      "fitness": 0.7916945746818487,
+      "inlier_rmse": 0.24938599608069534,
+      "ransac_used": false,
+      "valid": true,
+      "candidates": 1,
+      "rejected_by_gate": 0
+    },
+    {
+      "yama": 18,
+      "gecis": 1,
+      "fitness": 0.6314459049544995,
+      "inlier_rmse": 0.24831317204323894,
+      "ransac_used": false,
+      "valid": true,
+      "candidates": 1,
+      "rejected_by_gate": 0
+    },
+    {
+      "yama": 19,
+      "gecis": 1,
+      "fitness": 0.7067099567099567,
+      "inlier_rmse": 0.2705217207144143,
+      "ransac_used": false,
+      "valid": true,
+      "candidates": 1,
+      "rejected_by_gate": 0
+    },
+    {
+      "yama": 20,
+      "gecis": 1,
+      "fitness": 0.7150864082204578,
+      "inlier_rmse": 0.2567869878459481,
+      "ransac_used": false,
+      "valid": true,
+      "candidates": 1,
+      "rejected_by_gate": 0
+    },
+    {
+      "yama": 21,
+      "gecis": 1,
+      "fitness": 0.6112629852378348,
+      "inlier_rmse": 0.24998146557609077,
+      "ransac_used": false,
+      "valid": true,
+      "candidates": 1,
+      "rejected_by_gate": 0
+    },
+    {
+      "yama": 22,
+      "gecis": 1,
+      "fitness": 0.6306924516531504,
+      "inlier_rmse": 0.19578625969569433,
+      "ransac_used": false,
+      "valid": true,
+      "candidates": 1,
+      "rejected_by_gate": 0
+    },
+    {
+      "yama": 23,
+      "gecis": 1,
+      "fitness": 0.718091697645601,
+      "inlier_rmse": 0.22772642678302477,
+      "ransac_used": false,
+      "valid": true,
+      "candidates": 1,
+      "rejected_by_gate": 0
+    },
+    {
+      "yama": 24,
+      "gecis": 1,
+      "fitness": 0.8802502234137622,
+      "inlier_rmse": 0.27503067559253525,
+      "ransac_used": false,
+      "valid": true,
+      "candidates": 1,
+      "rejected_by_gate": 0
+    },
+    {
+      "yama": 25,
+      "gecis": 2,
+      "fitness": 0.8609865470852018,
+      "inlier_rmse": 0.23020246289701343,
+      "ransac_used": false,
+      "valid": true,
+      "candidates": 1,
+      "rejected_by_gate": 0
+    },
+    {
+      "yama": 26,
+      "gecis": 2,
+      "fitness": 0.9555728760717069,
+      "inlier_rmse": 0.23466559525608152,
+      "ransac_used": false,
+      "valid": true,
+      "candidates": 1,
+      "rejected_by_gate": 0
+    },
+    {
+      "yama": 27,
+      "gecis": 2,
+      "fitness": 0.9406158357771262,
+      "inlier_rmse": 0.24348001124356583,
+      "ransac_used": false,
+      "valid": true,
+      "candidates": 1,
+      "rejected_by_gate": 0
+    },
+    {
+      "yama": 28,
+      "gecis": 2,
+      "fitness": 0.9566074950690335,
+      "inlier_rmse": 0.2204591177270002,
+      "ransac_used": false,
+      "valid": true,
+      "candidates": 1,
+      "rejected_by_gate": 0
+    },
+    {
+      "yama": 29,
+      "gecis": 2,
+      "fitness": 0.7443365695792881,
+      "inlier_rmse": 0.23050244667156328,
+      "ransac_used": false,
+      "valid": true,
+      "candidates": 1,
+      "rejected_by_gate": 0
+    },
+    {
+      "yama": 30,
+      "gecis": 2,
+      "fitness": 0.5885931558935361,
+      "inlier_rmse": 0.2843228286560342,
+      "ransac_used": false,
+      "valid": true,
+      "candidates": 1,
+      "rejected_by_gate": 0
+    },
+    {
+      "yama": 31,
+      "gecis": 2,
+      "fitness": 0.7663257277734068,
+      "inlier_rmse": 0.2399720679287911,
+      "ransac_used": false,
+      "valid": true,
+      "candidates": 1,
+      "rejected_by_gate": 0
+    },
+    {
+      "yama": 32,
+      "gecis": 2,
+      "fitness": 0.8466152527849186,
+      "inlier_rmse": 0.22015266729290436,
+      "ransac_used": false,
+      "valid": true,
+      "candidates": 1,
+      "rejected_by_gate": 0
+    },
+    {
+      "yama": 33,
+      "gecis": 2,
+      "fitness": 0.7741477272727273,
+      "inlier_rmse": 0.22846678506597465,
+      "ransac_used": false,
+      "valid": true,
+      "candidates": 1,
+      "rejected_by_gate": 0
+    },
+    {
+      "yama": 34,
+      "gecis": 2,
+      "fitness": 0.6814092953523239,
+      "inlier_rmse": 0.19515713293812947,
+      "ransac_used": false,
+      "valid": true,
+      "candidates": 1,
+      "rejected_by_gate": 0
+    },
+    {
+      "yama": 35,
+      "gecis": 2,
+      "fitness": 0.8786959818043972,
+      "inlier_rmse": 0.2097173208552191,
+      "ransac_used": false,
+      "valid": true,
+      "candidates": 1,
+      "rejected_by_gate": 0
+    },
+    {
+      "yama": 36,
+      "gecis": 2,
+      "fitness": 0.8796116504854369,
+      "inlier_rmse": 0.19497895757025774,
+      "ransac_used": false,
+      "valid": true,
+      "candidates": 1,
+      "rejected_by_gate": 0
+    }
+  ],
+  "gecis_basina_poz_hatasi_mm": {
+    "tepe": 0.4075187134129588,
+    "yanak": 0.4424112332659026,
+    "dil": 0.46183338033408117
+  },
+  "segmentasyon": {
+    "mIoU_dis": 0.912493789782818,
+    "dogruluk": 0.9598701698117352,
+    "dice": 0.9547490622965609,
+    "model": "dgcnn",
+    "kose": 182084
+  }
+}

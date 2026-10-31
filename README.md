@@ -147,7 +147,8 @@ intraoral-3d-engine/
 ├── docker-compose.yml         # Çoklu servis orkestrasyonu (app, test, ai-train, ai-infer)
 ├── .dockerignore              # Docker derleme bağlamı filtre kuralları
 ├── pytest.ini                 # Test konfigürasyonu
-├── LICENSE                    # MIT Lisansı
+├── LICENSE                    # Akademik kullanım lisansı
+├── DATA_LICENSE.md            # Teeth3DS veri lisansı (CC BY-NC-ND 4.0) ve atıflar
 └── README.md                  # Teknik dokümantasyon
 ```
 
@@ -157,7 +158,7 @@ intraoral-3d-engine/
 
 ### 1. Depoyu Klonlayın
 ```bash
-git clone https://github.com/EmirhanKar/Dental3DScanner.git
+git clone https://github.com/Emirhan-Kar/Dental3DScanner.git
 cd Dental3DScanner
 ```
 
@@ -216,6 +217,38 @@ docker run --rm -v "%cd%\output:/app/output" dental-scanner:latest
 
 # Konteyner içinde testleri koşturma:
 docker run --rm dental-scanner:latest pytest tests/ -v
+```
+
+---
+
+## 🖥️ Demo Arayüzü (Komisyon Sunumu)
+
+İnternet gerektirmeyen, tarayıcıda açılan yerel bir arayüz:
+
+```bash
+# Windows: proje klasöründe demo_baslat.bat dosyasına çift tıklayın, ya da:
+venv_gpu\Scripts\python.exe demo\app.py
+# Tarayıcıda otomatik açılır: http://127.0.0.1:8050
+```
+
+| Sekme | Ne gösterir |
+|---|---|
+| **Canlı sanal tarama** | Hasta modeli ve tarama ayarları seçilir; sanal kamera görüntüsü (lazer + tespit), büyüyen 3D nokta bulutu, hat aşamaları, ardından sapma haritası, renkli diş segmentasyonu, FDI diş şeması, doğruluk ölçümleri ve otomatik klinik ölçümler (diş genişlikleri, ark uzunluğu, çapraşıklık; uzman etiketleriyle yan yana) |
+| **İki çene birlikte** | Aynı hastanın alt ve üst çenesi tek sahnede (yaklaşık kapanış, açılıp kapanabilir); iki çenenin ölçümleri ve Bolton analizi |
+| **Dosyadan segmentasyon** | Herhangi bir .obj / .ply / .stl çene modeli yüklenir, DGCNN her dişi FDI numarasıyla işaretler ve klinik ölçümleri çıkarır |
+| **Deney sonuçları** | `rapor_gorselleri/` altındaki tüm şekiller |
+
+- Bir ayar kombinasyonu bir kez tarandıktan sonra `runs/demo/` altına kaydedilir. Aynı ayarlar tekrar seçildiğinde birkaç saniyede kayıttan oynatılır (sunumda bekleme olmaz). Canlı taramayı zorlamak için "Kayıtlı tarama varsa hızlı oynat" kutusunu kaldırın.
+- Önerilen sunum ayarı: 3 geçiş, 0,5 mm aralık (~2–3 dk canlı; yüzey sapması ~0,036 mm, segmentasyon mIoU ~0,93).
+- GPU varsa segmentasyon otomatik olarak CUDA ile çalışır.
+
+### Otomatik klinik ölçümler (`processing/klinik_olcum.py`)
+
+Segmentasyondan ortodontik ölçümler: her dişin meziodistal genişliği, mevcut ark uzunluğu (iki taraftaki 1. büyük azı dişlerinin meziyalleri arası, dişlerden geçen düzgün ark eğrisi boyunca), gerekli alan (5–5 dişlerinin genişlik toplamı), ark uzunluğu farkı (çapraşıklık / boşluk), interkanin ve intermolar genişlik, iki çene için Bolton oranları. Doğrulama:
+
+```bash
+python experiments/klinik_olcum_deneyi.py --liste secim.json          # test seti: yapay zekâ vs. uzman etiketi
+python experiments/klinik_olcum_deneyi.py --sadece-ciz                # şekil 18'i yeniden çiz
 ```
 
 ---
@@ -349,6 +382,9 @@ Büyük boyutlu 3D diş tarama modelleri ve test verileri (`~16.25 GB`) dosya bo
 
 ## 📜 Lisans
 
-Bu proje [MIT Lisansı](LICENSE) altında lisanslanmıştır.
+**Copyright (c) 2026 Emirhan Kar & Furkan Genç**. Tüm hakları saklıdır.
 
-**Copyright (c) 2026 Emirhan Kar && Furkan Genç**
+- **Kod, model ağırlıkları, rapor ve şekiller:** [DentalScanner Akademik Kullanım Lisansı](LICENSE). Yalnızca ticari olmayan akademik amaçlarla (araştırma, eğitim, tez, yayın) ve atıf yapılarak kullanılabilir. Ticari kullanım, klinik kullanım ve diğer tüm kullanımlar yasaktır; bunlar için yazarların yazılı izni gerekir.
+- **Veri seti:** Teeth3DS üçüncü taraf verisidir, [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/) lisanslıdır ve bu depoda yer almaz. Ayrıntılar ve gerekli atıflar için [DATA_LICENSE.md](DATA_LICENSE.md) dosyasına bakın.
+
+> ⚠️ Bu yazılım bir araştırma prototipidir; gerçek hastalarda teşhis, tedavi ya da planlama amacıyla kullanılamaz.
