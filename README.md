@@ -374,7 +374,7 @@ Büyük boyutlu 3D diş tarama modelleri ve test verileri (`~16.25 GB`) dosya bo
    ```
 
 3. **Veri Seti Bütünlüğünü Doğrulayın:**
-   ```bash
+   ```bash 
    python utils/validator.py --data-root data/3DTeethData --parts data_part_1 data_part_2
    ```
 
