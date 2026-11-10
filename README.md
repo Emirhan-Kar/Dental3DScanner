@@ -6,7 +6,7 @@ Sistem, fiziksel cihaz bağımlılığını en aza indirip ağır iş yükünü 
 
 ---
 
-## 📌 İçindekiler
+## 📌 İçindekiler 
 - [Yazılım Mimarisi](#-yazılım-mimarisi-ve-veri-akış-şeması)
 - [Matematiksel ve Algoritmik Temeller](#-matematiksel-ve-algoritmik-temeller)
 - [3D Derin Öğrenme Modülü](#-3d-derin-öğrenme-modülü-tooth-segmentation)
