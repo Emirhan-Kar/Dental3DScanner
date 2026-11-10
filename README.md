@@ -4,7 +4,7 @@ Bu depo, video akışı üzerinden yüzey profili çıkarımı, gerçek zamanlı
 
 Sistem, fiziksel cihaz bağımlılığını en aza indirip ağır iş yükünü matematiksel optimizasyon ve bilgisayarlı görü algoritmalarıyla çözmeyi amaçlar.
 
----
+--- 
  
 ## 📌 İçindekiler
 - [Yazılım Mimarisi](#-yazılım-mimarisi-ve-veri-akış-şeması)  
